@@ -1,0 +1,667 @@
+﻿@page
+@model IndexModel
+@inject Dajeej.Data.DajeejContext _context
+
+@{
+    ViewData["Title"] = "Home page";
+
+}
+
+<!-- Slider
+============================================= -->
+<section id="slider" class="slider-element swiper_wrapper min-vh-50 min-vh-md-100" data-loop="true" data-autoplay="5000">
+    <div class="slider-inner">
+
+        <div class="swiper-container swiper-parent">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="container">
+                    </div>
+                    <div class="swiper-slide-bg" style="background-image: url('public/images/slider/pk12.jpg');"></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="container">
+                        <div class="slider-caption">
+                            <div>
+                                <h2 data-animate="zoomIn"><span>@sharedResource["OnLine Shopping"]</span></h2>
+                                <p class="d-none d-sm-block" data-animate="zoomIn" data-delay="500" style="color:white">@sharedResource["Shopping from anywhere"]</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide-bg" style="background-image: url('public/images/slider/sl1.jpg');"></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="container">
+                        <div class="slider-caption">
+                            <div>
+                                <h2 data-animate="zoomIn"><span>@sharedResource["OnLine Shopping"]</span></h2>
+                                <p class="d-none d-sm-block" data-animate="zoomIn" data-delay="500" style="color:white">@sharedResource["Best price"]</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide-bg" style="background-image: url('public/images/slider/sl2.jpg');"></div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="container">
+                        <div class="slider-caption">
+                            <div>
+                                <h2 data-animate="zoomIn"><span>@sharedResource["OnLine Shopping"]</span></h2>
+                                <p class="d-none d-sm-block" data-animate="zoomIn" data-delay="500" style="color:white">@sharedResource["Delivery within 24 hours"]</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide-bg" style="background-image: url('public/images/slider/sl3.jpg');"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- #slider end -->
+<!-- Content
+============================================= -->
+<section id="content">
+    @*	<div class="content-wrap">
+        <div class="container clearfix">
+
+        <div class="row col-mb-50 mb-0">
+        <div class="col-sm-6 col-md-4">
+        <div class="feature-box fbox-plain">
+        <div class="fbox-icon" data-animate="bounceIn">
+        <a href="#"><i class="icon-medical-i-cardiology"></i></a>
+        </div>
+        <div class="fbox-content">
+        <h3>Intensive Care</h3>
+        <p>Powerful Layout with Responsive functionality that can be adapted to any screen size. Resize browser to view.</p>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+        <div class="feature-box fbox-plain">
+        <div class="fbox-icon" data-animate="bounceIn" data-delay="200">
+        <a href="#"><i class="icon-medical-i-social-services"></i></a>
+        </div>
+        <div class="fbox-content">
+        <h3>Family Planning</h3>
+        <p>Looks beautiful &amp; ultra-sharp on Retina Screen Displays. Retina Icons, Fonts &amp; all others graphics are optimized.</p>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+        <div class="feature-box fbox-plain">
+        <div class="fbox-icon" data-animate="bounceIn" data-delay="400">
+        <a href="#"><i class="icon-medical-i-neurology"></i></a>
+        </div>
+        <div class="fbox-content">
+        <h3>Expert Consultation</h3>
+        <p>Canvas includes tons of optimized code that are completely customizable and deliver unmatched fast performance.</p>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+        <div class="feature-box fbox-plain">
+        <div class="fbox-icon" data-animate="bounceIn">
+        <a href="#"><i class="icon-medical-i-dental"></i></a>
+        </div>
+        <div class="fbox-content">
+        <h3>Dental Sciences</h3>
+        <p>Powerful Layout with Responsive functionality that can be adapted to any screen size. Resize browser to view.</p>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+        <div class="feature-box fbox-plain">
+        <div class="fbox-icon" data-animate="bounceIn" data-delay="200">
+        <a href="#"><i class="icon-medical-i-imaging-root-category"></i></a>
+        </div>
+        <div class="fbox-content">
+        <h3>X-Ray Services</h3>
+        <p>Looks beautiful &amp; ultra-sharp on Retina Screen Displays. Retina Icons, Fonts &amp; all others graphics are optimized.</p>
+        </div>
+        </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+        <div class="feature-box fbox-plain">
+        <div class="fbox-icon" data-animate="bounceIn" data-delay="400">
+        <a href="#"><i class="icon-medical-i-ambulance"></i></a>
+        </div>
+        <div class="fbox-content">
+        <h3>24x7 Emergency</h3>
+        <p>Canvas includes tons of optimized code that are completely customizable and deliver unmatched fast performance.</p>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        </div>
+        </div>*@
+</section>
+<div class="section row p-0 align-items-stretch dark topmargin-sm">
+    <div class="col-lg-7" style="background: url('public/images/slider/p6.png') center center no-repeat; background-size: auto; min-height: 250px;">
+        <div>&nbsp;</div>
+    </div>
+    <div id="booking-appointment-form" class="col-lg-5 p-0">
+        <div class="bg-color form-widget col-padding" data-loader="button">
+            <h2>@sharedResource["Contact Us"]</h2>
+            <div class="form-result"></div>
+            <form class="row mb-0" id="template-medical-form" method="post">
+                <div class="form-process">
+                    <div class="css3-spinner">
+                        <div class="css3-spinner-scaler"></div>
+                    </div>
+                </div>
+                <div class="col-md-12 form-group">
+                    <label asp-for="contact.FullName">@sharedResource["Name:"]</label>
+                    <input type="text" asp-for="contact.FullName" class="form-control not-dark required">
+                </div>
+
+                <div class="col-md-12 form-group">
+                    <label asp-for="contact.Email">@sharedResource["Email Address:"]</label>
+                    <input type="email" asp-for="contact.Email" class="form-control not-dark required">
+                </div>
+                <div class="col-md-12 form-group">
+                    <label asp-for="contact.Msg">@sharedResource["Message:"]</label>
+                    <textarea asp-for="contact.Msg" class="form-control not-dark required" cols="30" rows="5"></textarea>
+                </div>
+
+                <div class="w-100"></div>
+                <div class="col-md-5">
+                    <div class="row">
+                    </div>
+                </div>
+
+                <div class="w-100"></div>
+                <div class="col-12 form-group d-none">
+                    <input type="text" name="template-medical-botcheck" value="" />
+                </div>
+                <div class="col-12 form-group text-center">
+                    <button class="button button-white button-light button-rounded m-0" type="submit" value="submit">@sharedResource["Sending"]</button>
+                </div>
+                <input type="hidden" name="prefix" value="template-medical-">
+            </form>
+
+        </div>
+    </div>
+</div>
+<section id="Download">
+			<div class="content-wrap">
+				<div class="container clearfix">
+
+					<div class="row align-items-center justify-content-between bg-light overflow-hidden rounded-5">
+						<div class="col-lg-6 col-md-5 p-5">
+							<div class="heading-block border-bottom-0">
+								<h2 class="fw-normal ls0 nott mb-0 font-primary" style="font-size: 44px; line-height: 1.3">@sharedResource["Available for your Smartphone."]</h2>
+							</div>
+							<p>@sharedResource["Djeej application is the best application at the level of Kuwait, the Gulf and the Arab world, as it collects the best prices, discounts and offers."]</p>
+							<div>
+								<a href="#"><img src="public/images/slider/appstore.png" alt="Image" height="54" class="mt-3"></a>
+								<a href="#"><img src="public/images/slider/googleplay.png" alt="Image" class="ms-xl-3 ms-lg-1 mt-3 ms-0 " height="54"></a>
+							</div>
+						</div>
+
+						<div class="col-lg-6 col-md-7 mt-2 mt-md-0">
+							<div class="d-none d-lg-flex">
+								<img src="public/images/slider/app15.jpg" class="fast fadeInDown animated" alt="Image" style="height: 600px" data-animate="fadeInDown">
+								<img src="public/images/slider/app1.jpg" class="fast fadeInUp animated" alt="Image" style="height: 600px" data-animate="fadeInUp">
+							</div>
+							<img src="public/images/slider/iphone.png" alt="Image" class="d-block d-lg-none px-5 px-sm-0 p-md-5">
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+<section   id="Features">
+    <div class="content-wrap pb-0">
+        <div class="container clearfix">
+
+            <div class="grid-filter-wrap">
+
+                <!-- Portfolio Filter
+                ============================================= -->
+                <ul class="grid-filter" data-container="#portfolio" hidden>
+                    <li class="activeFilter"><a href="#" data-filter="*"></a></li>
+                    <li><a href="#" data-filter=".pf-icons"></a></li>
+                    <li><a href="#" data-filter=".pf-illustrations"></a></li>
+                    <li><a href="#" data-filter=".pf-uielements"></a></li>
+                    <li><a href="#" data-filter=".pf-media"></a></li>
+                    <li><a href="#" data-filter=".pf-graphics"></a></li>
+                </ul><!-- .grid-filter end -->
+
+                <div class="grid-shuffle rounded mb-2" data-container="#portfolio">
+                    <i class="icon-random"></i>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Portfolio Items
+        ============================================= -->
+        <div id="portfolio" class="portfolio portfolio-reveal row grid-container g-0" data-layout="fitRows">
+
+            <!-- Portfolio Item: Start -->
+            <article class="portfolio-item col-lg-3 col-md-4 col-sm-6 col-12 pf-media pf-icons">
+                <!-- Grid Inner: Start -->
+                <div class="grid-inner">
+                    <!-- Image: Start -->
+                    <div class="portfolio-image">
+                        <a href="portfolio-single.html">
+                            <img src="public/images/slider/app4.jpg" alt="Open Imagination">
+                        </a>
+                        <!-- Overlay: Start -->
+                        <div class="bg-overlay">
+                            <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                            </div>
+                            <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                        </div>
+                        <!-- Overlay: End -->
+                    </div>
+                    <div class="portfolio-desc">
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h3><a  style="color:#2296d3">Download</a></h3>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="#" class="social-icon si-small si-colored  si-android">
+                                        <i class="icon-android"></i>
+                                        <i class="icon-android"></i>
+                                    </a>
+
+                                    <a href="#" class="social-icon si-small si-colored  si-pinterest">
+
+                                        <i class="fab fa-apple pt-2"></i>
+                                        <i class="fab fa-apple pt-2"></i>
+
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- Grid Inner: End -->
+            </article>
+            <!-- Portfolio Item: End -->
+
+            <article class="portfolio-item col-lg-3 col-md-4 col-sm-6 col-12 pf-illustrations">
+                <div class="grid-inner">
+                    <div class="portfolio-image">
+                        <a href="portfolio-single.html">
+                            <img src="public/images/slider/app14.jpg" alt="Locked Steel Gate">
+                        </a>
+                        <div class="bg-overlay">
+                            <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                            </div>
+                            <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-desc">
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h3><a style="color:#2296d3">Download</a></h3>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="#" class="social-icon si-small si-colored  si-android">
+                                        <i class="icon-android"></i>
+                                        <i class="icon-android"></i>
+                                    </a>
+
+                                    <a href="#" class="social-icon si-small si-colored  si-pinterest">
+
+                                        <i class="fab fa-apple pt-2"></i>
+                                        <i class="fab fa-apple pt-2"></i>
+
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </article>
+
+            <article class="portfolio-item col-lg-3 col-md-4 col-sm-6 col-12 pf-graphics pf-uielements">
+                <div class="grid-inner">
+                    <div class="portfolio-image">
+                        <a href="#">
+                            <img src="public/images/slider/app11.jpg" alt="Mac Sunglasses">
+                        </a>
+
+                    </div>
+                    <div class="portfolio-desc">
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h3><a  style="color:#2296d3">Download</a></h3>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="#" class="social-icon si-small si-colored  si-android">
+                                        <i class="icon-android"></i>
+                                        <i class="icon-android"></i>
+                                    </a>
+
+                                    <a href="#" class="social-icon si-small si-colored  si-pinterest">
+
+                                        <i class="fab fa-apple pt-2"></i>
+                                        <i class="fab fa-apple pt-2"></i>
+
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </article>
+
+            <article class="portfolio-item col-lg-3 col-md-4 col-sm-6 col-12 pf-icons pf-illustrations">
+                <div class="grid-inner">
+                    <div class="portfolio-image">
+                        <div class="fslider" data-arrows="false" data-speed="400" data-pause="4000">
+                            <div class="flexslider">
+                                <div class="slider-wrap">
+                                    <div class="slide"><a href="portfolio-single-gallery.html"><img src="public/images/slider/app11.jpg" alt="Morning Dew"></a></div>
+                                    <div class="slide"><a href="portfolio-single-gallery.html"><img src="public/images/slider/app13.jpg" alt="Morning Dew"></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-overlay" data-lightbox="gallery">
+                            <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                                <a href="public/images/slider/app14.jpg" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
+                                <a href="public/images/slider/app15.jpg" class="d-none" data-lightbox="gallery-item"></a>
+                            </div>
+                            <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-desc">
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h3><a  style="color:#2296d3">Download</a></h3>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="#" class="social-icon si-small si-colored  si-android">
+                                        <i class="icon-android"></i>
+                                        <i class="icon-android"></i>
+                                    </a>
+
+                                    <a href="#" class="social-icon si-small si-colored  si-pinterest">
+
+                                        <i class="fab fa-apple pt-2"></i>
+                                        <i class="fab fa-apple pt-2"></i>
+
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </article>
+
+            <article class="portfolio-item col-lg-3 col-md-4 col-sm-6 col-12 pf-uielements pf-media">
+                <div class="grid-inner">
+                    <div class="portfolio-image">
+                        <a href="portfolio-single.html">
+                            <img src="public/images/slider/app15.jpg" alt="Console Activity">
+                        </a>
+                        <div class="bg-overlay">
+                            <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                            </div>
+                            <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-desc">
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h3><a  style="color:#2296d3">Download</a></h3>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="#" class="social-icon si-small si-colored  si-android">
+                                        <i class="icon-android"></i>
+                                        <i class="icon-android"></i>
+                                    </a>
+
+                                    <a href="#" class="social-icon si-small si-colored  si-pinterest">
+
+                                        <i class="fab fa-apple pt-2"></i>
+                                        <i class="fab fa-apple pt-2"></i>
+
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </article>
+
+            <article class="portfolio-item col-lg-3 col-md-4 col-sm-6 col-12 pf-graphics pf-illustrations">
+                <div class="grid-inner">
+                    <div class="portfolio-image">
+                        <div class="fslider" data-arrows="false">
+                            <div class="flexslider">
+                                <div class="slider-wrap">
+                                    <div class="slide"><a href="portfolio-single-gallery.html"><img src="public/images/slider/app1.jpg" alt="Shake It"></a></div>
+                                    <div class="slide"><a href="portfolio-single-gallery.html"><img src="public/images/slider/app2.jpg" alt="Shake It"></a></div>
+                                    <div class="slide"><a href="portfolio-single-gallery.html"><img src="public/images/slider/app3.jpg" alt="Shake It"></a></div>
+                                    <div class="slide"><a href="portfolio-single-gallery.html"><img src="public/images/slider/app4.jpg" alt="Shake It"></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-overlay" data-lightbox="gallery">
+                            <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                                <a href="public/images/slider/app5.jpg" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350" data-hover-parent=".portfolio-item" data-lightbox="gallery-item"><i class="icon-line-stack-2"></i></a>
+                                <a href="public/images/slider/app6.jpg" class="d-none" data-lightbox="gallery-item"></a>
+                                <a href="public/images/slider/app7.jpg" class="d-none" data-lightbox="gallery-item"></a>
+                                <a href="public/images/slider/app8.jpg" class="d-none" data-lightbox="gallery-item"></a>
+                            </div>
+                            <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-desc">
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h3><a  style="color:#2296d3">Download</a></h3>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="#" class="social-icon si-small si-colored  si-android">
+                                        <i class="icon-android"></i>
+                                        <i class="icon-android"></i>
+                                    </a>
+
+                                    <a href="#" class="social-icon si-small si-colored  si-pinterest">
+
+                                        <i class="fab fa-apple pt-2"></i>
+                                        <i class="fab fa-apple pt-2"></i>
+
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </article>
+
+            <article class="portfolio-item col-lg-3 col-md-4 col-sm-6 col-12 pf-uielements pf-icons">
+                <div class="grid-inner">
+                    <div class="portfolio-image">
+                        <a href="portfolio-single-video.html">
+                            <img src="public/images/slider/app2.jpg" alt="Backpack Contents">
+                        </a>
+                        <div class="bg-overlay">
+                            <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                            </div>
+                            <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-desc">
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h3><a  style="color:#2296d3">Download</a></h3>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="#" class="social-icon si-small si-colored  si-android">
+                                        <i class="icon-android"></i>
+                                        <i class="icon-android"></i>
+                                    </a>
+
+                                    <a href="#" class="social-icon si-small si-colored  si-pinterest">
+
+                                        <i class="fab fa-apple pt-2"></i>
+                                        <i class="fab fa-apple pt-2"></i>
+
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </article>
+
+            <article class="portfolio-item col-lg-3 col-md-4 col-sm-6 col-12 pf-graphics">
+                <div class="grid-inner">
+                    <div class="portfolio-image">
+                        <a href="portfolio-single.html">
+                            <img src="public/images/slider/app1.jpg" alt="Sunset Bulb Glow">
+                        </a>
+                        <div class="bg-overlay">
+                            <div class="bg-overlay-content dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item">
+                            </div>
+                            <div class="bg-overlay-bg dark" data-hover-animate="fadeIn" data-hover-parent=".portfolio-item"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-desc">
+                        <div class="row">
+
+                            <div class="col-12 text-center">
+                                <h3><a  style="color:#2296d3">Download</a></h3>
+                                <div class="d-flex justify-content-center mb-3">
+                                    <a href="#" class="social-icon si-small si-colored  si-android">
+                                        <i class="icon-android"></i>
+                                        <i class="icon-android"></i>
+                                    </a>
+
+                                    <a href="#" class="social-icon si-small si-colored  si-pinterest">
+
+                                        <i class="fab fa-apple pt-2"></i>
+                                        <i class="fab fa-apple pt-2"></i>
+
+                                    </a>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </article>
+
+
+
+        </div><!-- #portfolio end -->
+
+    </div>
+</section><!-- #content end -->
+<div>
+
+    @*<div class="screen-section" id="Download">
+        <div class="screen-section-wrapper">
+
+
+
+        <div class="screen-section-bottom" >
+        <div class="screen-section-bottom-wrapper">
+        <div class="container">
+        <div class="row">
+        <div class="col-lg-12 offset-lg-0 col-md-8 offset-md-2 col-10 offset-1">
+        <div class="section-heading center width-71">
+
+        <div class="main-heading c-dark">
+        <h1 style="color:#2296d3">@sharedResource["Download Application on"] </h1>
+        </div>
+        </div>
+        <br />
+        <div class="download-button-group" style="text-align:center">
+        <a href="#" class="download-button download-button-1 download-button-google">
+        <div class="download-button-inner">
+        <div class="download-button-icon c-orange">
+        <i class="fab fa-google-play"></i>
+        </div>
+        <div class="download-button-content">
+        @*<h5 class="c-grey upper ls-1">@sharedResource["get it on"]</h5>
+        <h3 class="c-dark ls-2" style="color:#a5c736">Android</h3>
+        </div>
+        </div>
+        </a>
+        <a href="#" class="download-button download-button-1 download-button-apple">
+        <div class="download-button-inner">
+        <div class="download-button-icon c-red">
+        <i class="fab fa-apple"></i>
+        </div>
+        <div class="download-button-content">
+        @* <h5 class="c-grey upper ls-1">@sharedResource["get it on"]</h5>
+        <h3 class="c-dark ls-2" style="color:#c9d1d4">iOS</h3>
+        </div>
+        </div>
+        </a>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <!--
+        screen section bottom - end
+        -->
+        </div>*@
+
+</div>
+
+

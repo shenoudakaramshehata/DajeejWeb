@@ -1,0 +1,303 @@
+﻿@page
+
+@model Dajeej.Areas.Admin.Pages.Items.ItemsModel
+@using Dajeej.Models
+@using Dajeej.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Manage.Internal
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Localization
+
+@inject Dajeej.Data.DajeejContext _context
+@inject UserManager<ApplicationUser> _userManager
+
+@{
+    var SubscriptionsIsNull =
+    _context.Subscriptions
+    .Include(q => q.Plan)
+    .Where(s => s.ShopId == Model.Id)
+    .OrderBy(i => i.SubscriptionId).LastOrDefault();
+
+}
+<script>
+  
+    
+</script>
+
+
+
+
+<div class="card w-100">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Add"]  @sharedResource["Item"] </h3>
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+
+        <form id="form" class="item_form" method="post" enctype="multipart/form-data">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <div class="row additem" >
+                <div class="col-md-12 col-lg-6 col_form" style="margin-bottom:25px">
+                    <h3> @sharedResource["Details"]  </h3>
+                    <hr />
+                    <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["NameEn"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Item.ItemTitleEn)
+                           
+                            )
+                        </div>
+                    </div>
+
+                              <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["NameAr"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Item.ItemTitleAr)
+                           
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["DescriptionEn"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Item.ItemDescriptionEn).Height(200)
+                            
+
+                            )
+                        </div>
+                    </div>
+
+
+                                  <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["DescriptionAr"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Item.ItemDescriptionAr).Height(200)
+                            
+
+                            )
+                        </div>
+                    </div>
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Price"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.Item.ItemPrice)
+                            
+
+                            )
+                        </div>
+                    </div>
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["IsActive"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().CheckBoxFor(s => s.Item.IsActive)
+                            .Value(false)
+                            )
+                        </div>
+                    </div>
+
+
+                                       <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["OutOfStock"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().CheckBoxFor(s => s.Item.OutOfStock)
+                            .Value(false)
+                            )
+                        </div>
+                    </div>
+
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Sort"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.Item.OrderIndex)
+
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["Category"]:</div>
+
+                        <div class="dx-field-value">
+                               @(Html.DevExtreme().SelectBox().Name("Item.CategoryId")
+                .ValueExpr("Value")
+                            .DisplayExpr("Text").Placeholder(sharedResource["Select Category"]).RtlEnabled(true)
+                .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("CategoryLookup").Key("Value"))
+                .ShowClearButton(true)
+                
+                .OnValueChanged("onValueChanged"))
+
+                          
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["SubCategory"]:</div>
+
+                        <div class="dx-field-value">
+
+                              @(Html.DevExtreme().SelectBox().Name("Item.SubCategoryId").ID("citySelectBox")
+                 .DataSource(ds => ds.WebApi().Controller("Items").LoadAction("SubCategoryLookup").Key("SubCategoryId"))
+                            .ValueExpr("SubCategoryId")
+                            .OnInitialized("CompInit")
+                            .DisplayExpr("SubCategoryTLAR").Placeholder(sharedResource["Select SubCategory"]).RtlEnabled(true)
+                            )
+
+                           
+                        </div>
+                    </div>
+                     @if(_context.Collections.Where(e=>e.IsActive==true).Count() > 0 && SubscriptionsIsNull.Plan.VipCollection)
+                    {
+                        <div class="dx-field">
+                            <div class="dx-field-label">@sharedResource["Collection"]</div>
+                            <div class="dx-field-value">
+                                @foreach (var item in _context.Collections.Where(e=>e.IsActive==true))
+                                {
+                                    <div class="dx-field">
+                                        <div class="dx-field-label">@item.CollectionTitleEn</div>
+                                        <div class="dx-field-value">
+                                            <input style="margin-top:10px; width:18px; height:18px" name="collection" type="checkbox" id="checkbox" value="@item.CollectionId" class="styledCheckbox">                                    
+                                        </div>
+                                    </div>
+                                }
+
+                            
+
+
+                            </div>
+                        </div>
+                        
+                    }
+                </div>
+
+
+
+                <div class="col-md-12 col-lg-6 col_form">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                            <h3> @sharedResource["Picture"] </h3>
+                            <hr />
+                            <div id="fileuploader">
+                                <div class="widget-container">
+                                    @(Html.DevExtreme().FileUploader()
+                                    .ID("Main-uploader")
+                                    .Name("MainImage")
+                                    .Multiple(false)
+                                    .Accept("image/*")
+                                    .UploadMode(FileUploadMode.UseForm)
+                                    .UploadUrl(Url.Action("Upload", "FileUploader"))
+                                    .OnValueChanged("fileUploader_valueChanged")
+                                      .SelectButtonText(sharedResource["Select_photo"])
+                                    )
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-lg-6 col_form">
+                            <h3> @sharedResource["Item_Images"] </h3>
+                            <hr />
+                            <div id="fileuploader">
+                                <div class="widget-container">
+                                    @(Html.DevExtreme().FileUploader()
+                                    .ID("file-uploader")
+                                    .Name("myFile")
+                                      .SelectButtonText(sharedResource["Select More photos"])
+                                    .Accept("image/*")
+                                    .UploadMode(FileUploadMode.UseForm)
+                                    .Multiple(true)
+                                    .UploadUrl(Url.Action("Upload", "FileUploader"))
+                                    .OnValueChanged("fileUploader_valueChanged")
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-12 button mb-5" style="margin-top:10px">
+
+                    @(Html.DevExtreme().Button()
+                    .ID("button")
+                    .Text(sharedResource["Save"])
+                    .Type(ButtonType.Success)
+                    .UseSubmitBehavior(true)
+                    )
+                </div>
+            </div>
+
+
+        </form>
+
+
+
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+
+    var Drop;
+
+    function CompInit(e) {
+        Drop = e.component;
+       console.log(Drop)
+    }
+
+
+      function onValueChanged(e) {
+                
+
+        let dataSource = Drop.getDataSource();
+        dataSource.filter("CategoryId", "=", e.value);
+        dataSource.load();
+        Drop.option("value", null);
+    }
+
+    function getFileUploaderInstance() {
+        return $("#file-uploader").dxFileUploader("instance");
+    }
+
+    function fileUploader_valueChanged(e) {
+        var files = e.value;
+    }
+
+    function acceptOption_changed(e) {
+        getFileUploaderInstance().option("accept", e.value);
+    }
+
+    function uploadMode_changed(e) {
+        getFileUploaderInstance().option("uploadMode", e.value);
+    }
+
+    function multipleOption_changed(e) {
+        getFileUploaderInstance().option("multiple", e.value);
+    }
+
+
+    function belal(e) {
+        console.log($("#DropCategory"))
+    alert('Come');
+    var secondEditor = $("#DropSubCategory").dxSelectBox("instance");
+    secondEditor.getDataSource().filter(['CategoryId', '=', e.value]);
+    secondEditor.getDataSource().load();
+}
+
+
+</script>
+

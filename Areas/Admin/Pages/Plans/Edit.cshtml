@@ -1,0 +1,59 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Plans.EditModel
+@{
+}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Plan"]  </h3>
+        <a asp-page="List" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+        @*        <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/Admin/plans/list">@sharedResource["Back"]</a>
+        *@
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+        <form id="form" method="post" enctype="multipart/form-data">
+            @(Html.DevExtreme().Form<Dajeej.Models.Plan>()
+                                         .FormData(Model.plan)
+
+            .Items(items => {
+                items.AddSimpleFor(m => m.PlanId).Visible(false);
+
+
+                items.AddSimpleFor(m => m.ArabicTitle).IsRequired(true).Label(k => k.Text(sharedResource["Arabic Title"]));
+                items.AddSimpleFor(m => m.EnglishTitle).IsRequired(true).Label(k => k.Text(sharedResource["English Title"]));
+                items.AddSimpleFor(m => m.Price).Label(k => k.Text(sharedResource["Price"]));
+                items.AddSimpleFor(m => m.Period).Label(k => k.Text(sharedResource["Period"]));
+                items.AddSimpleFor(m => m.NoOfItems).Label(k => k.Text(sharedResource["No Of Items"]));
+                items.AddSimpleFor(m => m.VipCollection).Label(k => k.Text(sharedResource["VipCollection"]));
+                items.AddSimpleFor(m => m.Reports).Label(k => k.Text(sharedResource["Reports"]));
+                items.AddSimpleFor(m => m.Dashboard).Label(k => k.Text(sharedResource["Dashboard"]));
+                items.AddSimpleFor(m => m.AdzBanners).Label(k => k.Text(sharedResource["AdzBanners"]));
+                items.AddSimpleFor(m => m.CountryId).IsRequired(true)
+            .Editor(e => e
+            .Lookup()
+
+            .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("CountryLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+            .Placeholder(sharedResource["Select Country"])
+                                                               .ShowClearButton(true)
+                                                               .ClearButtonText(sharedResource["Clear"])
+                                                               .CancelButtonText(sharedResource["Cancel"])
+                                                               .SearchPlaceholder(sharedResource["searching"])
+            ).Label(k => k.Text(sharedResource["Country"]));
+
+                items.AddButton()
+        .ColSpan(3)
+        .HorizontalAlignment(HorizontalAlignment.Right)
+        .ButtonOptions(b => b.Text(sharedResource["Save"])
+        .Type(ButtonType.Success)
+        .UseSubmitBehavior(true)).CssClass("invers");
+
+
+
+            })
+            )
+        </form>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+﻿@page
+@model  Dajeej.Pages.SomethingwentErrorModel
+@{
+    ViewData["Title"] = "SomeThing Went Error";
+}
+<style>
+
+
+body, button {
+    background: #F5F1E3;
+    font-family: 'Armata', sans-serif;
+}
+
+.errorModule {
+    margin: 40px auto 20px;
+    text-align: center;
+    color: #A80000;
+    padding-top: 15rem
+}
+.errorMsg {
+    font-size:40px;
+}
+
+
+</style>
+    <div class="errorModule">
+        <div class="errorIcon">
+          @*  <i class="fa fa-unlink"></i>*@
+        </div>
+        @{ if (Model.ErrorMessage != null)
+            {
+                <div class="errorMsg">
+                @Model.ErrorMessage
+                </div>
+            }
+            else
+            {
+                <div class="errorMsg">@sharedResource["Oops! Something went Wrong. Try Again"]</div>
+            }
+        }
+
+    </div>
+
+
+

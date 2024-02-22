@@ -1,0 +1,356 @@
+﻿@page
+@model Dajeej.Areas.Shop.IndexModel
+@{
+    
+}
+@using Dajeej.Models
+@using Dajeej.Data
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@inject Dajeej.Data.ApplicationDbContext db
+@inject Dajeej.Data.DajeejContext _context
+@inject UserManager<ApplicationUser> _userManager
+
+<link rel="stylesheet" href="~/css/font-awesome.min.css" />
+
+@{
+    var SubscriptionsIsNull = _context.Subscriptions.Include(q => q.Plan).Where(s => s.ShopId == _userManager.FindByNameAsync(User.Identity.Name).Result.EntityId).OrderBy(i => i.SubscriptionId).LastOrDefault();
+}
+
+
+
+
+@if (SubscriptionsIsNull != null &&
+SubscriptionsIsNull.Active &&
+SubscriptionsIsNull.EndDate.Date >= DateTime.Now.Date
+&& SubscriptionsIsNull.Plan.Dashboard
+&& SubscriptionsIsNull.Plan.Reports
+)
+
+
+{
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <div class="row welcome_message_conatiner">
+                        <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                            <h3 class="font-weight-bold">@sharedResource["Welcome"]  @User.Identity.Name</h3>
+                            <h6 style="color:gray"> @sharedResource["Statistics"]   </h6>
+                        </div>
+                        <div class="col-12 col-xl-4 box">
+                            <div class="justify-content-end d-flex">
+                                <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                                    <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <i class="mdi mdi-calendar"></i> @sharedResource["Dashboard"]
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                                        <a class="dropdown-item" href="/Shop/index"> @sharedResource["Statistics"] </a>
+                                        <a class="dropdown-item" href="/Shop/FinancialDashboard"> @sharedResource["Financial"] </a>
+                                        <a class="dropdown-item">
+                                            <i class="ti-power-off text-primary"></i>
+                                            <form class="form-inline d-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                                <button type="submit" style="font-size:14px !important" class="nav-link btn btn-link text-dark d-inline">@sharedResource["Logout"]</button>
+                                            </form>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4 mb-4 stretch-card transparent">
+                    <div class="card card-light-danger">
+                        <div class="card-body">
+                            <i class="fas fa-gamepad" style="text-align: center;display: block;font-size: 31px; margin:auto; margin-bottom: 10px;"></i>
+                            <h4 class="mb-4 text-center">@sharedResource["Total Items"] </h4>
+                            <p class="fs-30 mb-2 text-center">@_context.Items.Where(s => s.ShopId ==  _userManager.GetUserAsync(User).Result.EntityId).Count()</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4 stretch-card transparent">
+                    <div class="card card-dark-blue">
+                        <div class="card-body">
+                            <i class="fas fa-shopping-basket" style="text-align: center;display: block;font-size: 31px; margin:auto;  margin-bottom: 10px;"></i>
+                            <h4 class="mb-4 text-center">@sharedResource["Total Orders"] </h4>
+                            <p class="fs-30 mb-2 text-center">@_context.Orders.Where(s => s.ShopId == _userManager.GetUserAsync(User).Result.EntityId).Count()</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-4 mb-4 stretch-card transparent">
+                    <div class="card card-light-blue">
+                        <div class="card-body">
+                            <i class="fas fa-shopping-basket" style="text-align: center;display: block;font-size: 31px;  margin:auto; margin-bottom: 10px;"></i>
+                            <h4 class="mb-4 text-center"> @sharedResource["Today's Orders"]  </h4>
+                            <p class="fs-30 mb-2 text-center">@_context.Orders.Where(s => s.ShopId == _userManager.GetUserAsync(User).Result.EntityId && s.OrderDate.Date == DateTime.Now.Date).Count()</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <p class="card-title">@sharedResource["Top Ten Items Report"] </p>
+                            </div>
+                            <p class="font-weight-500" style="margin-bottom: 20px;"> @sharedResource["The best performing items in terms of number of purchases"]  </p>
+
+                            @(Html.DevExtreme().Chart()
+                        .ID("TopItemsChart")
+                        .Series(s => s
+                        .Add()
+                        .ArgumentField("Day")
+                        .ValueField("Oranges")
+                        .Name("Orders Count Per Clients")
+                        .Type(SeriesType.Bar)
+                        .Label(l => l.Visible(true))
+                        .Color("#4b49ac")
+                        .ShowInLegend(false)
+                        )
+                        .DataSource(ds => ds.Mvc()
+                        .Controller("Statistics")
+                        .LoadAction("GetTopTenItemsForShop")
+                        )
+                        )
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <p class="card-title">@sharedResource["Top Ten Categories Report"] </p>
+                            </div>
+                            <p class="font-weight-500" style="margin-bottom: 20px;"> @sharedResource["The best categories in terms of the number of sales of its products"]  </p>
+
+                            @(Html.DevExtreme().Chart()
+                        .ID("TopTenCategories")
+                        .Series(s => s
+                        .Add()
+                        .ArgumentField("Day")
+                        .ValueField("Oranges")
+                        .Name("Orders Count Per Clients")
+                        .Type(SeriesType.Bar)
+                        .Label(l => l.Visible(true))
+                        .Color("#f3797e")
+                        .ShowInLegend(false)
+                        )
+                        .DataSource(ds => ds.Mvc()
+                        .Controller("Statistics")
+                        .LoadAction("GetTopCategoriesForShop")
+                        )
+                        )
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <p class="card-title">@sharedResource["Top Ten Subcategories Report"] </p>
+                            </div>
+                            <p class="font-weight-500" style="margin-bottom: 20px;"> @sharedResource["The best subcategories in terms of the number of sales of its products"] </p>
+
+                            @(Html.DevExtreme().Chart()
+                        .ID("TopTenSubCategories")
+                        .Series(s => s
+                        .Add()
+                        .ArgumentField("Day")
+                        .ValueField("Oranges")
+                        .Name("Orders Count Per Clients")
+                        .Type(SeriesType.Bar)
+                        .Label(l => l.Visible(true))
+                        .Color("#7da0fa")
+                        .ShowInLegend(false)
+                        )
+                        .DataSource(ds => ds.Mvc()
+                        .Controller("Statistics")
+                        .LoadAction("GetTopSubCategoriesForShop")
+                        )
+                        )
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card position-relative">
+                        <div class="card-body">
+                            <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                @(Html.DevExtreme().Chart()
+                                            .ID("DailyOrdersCount")
+                                            .Rotated(true)
+                                            .DataSource("https://" + @HttpContext.Request.Host.Value.ToString() + "/api/statistics/GetDailyOrderForShop")
+                                            .Series(s => s.Add()
+                                            .Label(l => l
+                                            .Visible(true)
+                                            .BackgroundColor("#c18e92")
+
+                                            )
+                                            .Color("#79cac4")
+                                            .Type(SeriesType.Bar)
+                                            .ArgumentField("day")
+                                            .ValueField("sales")
+                                            )
+                                            .Title(@sharedResource["Order Count Per Day"])
+                                            .ArgumentAxis(a => a
+                                            .Label(l => l
+                                            .CustomizeText(@<text>
+                                                    function() {
+                                                    return this.valueText;
+                                                    }
+                                                </text>)
+                                            )
+                                            )
+                                            .ValueAxis(a => a.Add()
+                                            .Tick(t => t.Visible(false))
+                                            .Label(l => l.Visible(false))
+                                            )
+                                            .Export(e => e.Enabled(true))
+                                            .Legend(l => l.Visible(false))
+                                            .ScrollBar(s => s.Visible(true))
+                                            .ZoomAndPan(z => z.ArgumentAxis(ChartZoomAndPanMode.Both))
+                                            )
+                                            </div>
+
+
+                                            <div class="col-xl-6">
+                                                @(Html.DevExtreme().Chart()
+                                            .ID("MonthlyOrderCount")
+                                            .Rotated(true)
+                                            .DataSource("https://" + @HttpContext.Request.Host.Value.ToString() + "/api/statistics/GetMonthlyOrderForShop")
+                                            .Series(s => s.Add()
+                                            .Label(l => l
+                                            .Visible(true)
+                                            .BackgroundColor("#c18e92")
+                                            )
+                                            .Color("#79cac4")
+                                            .Type(SeriesType.Bar)
+                                            .ArgumentField("day")
+                                            .ValueField("sales")
+                                            )
+                                            .Title(@sharedResource["Order Count Per Month"])
+                                            .ArgumentAxis(a => a
+                                            .Label(l => l
+                                            .CustomizeText(@<text>
+                                                    function() {
+                                                    return "Month " + this.valueText;
+                                                    }
+                                                </text>)
+                                            )
+                                            )
+                                            .ValueAxis(a => a.Add()
+                                            .Tick(t => t.Visible(false))
+                                            .Label(l => l.Visible(false))
+                                            )
+                                            .Export(e => e.Enabled(true))
+                                            .Legend(l => l.Visible(false))
+                                            .ScrollBar(s => s.Visible(true))
+                                            .ZoomAndPan(z => z.ArgumentAxis(ChartZoomAndPanMode.Both))
+                                            )
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card position-relative">
+                        <div class="card-body">
+                            <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                @(Html.DevExtreme().Chart()
+                                            .ID("OrderCountPerYear")
+                                            .Palette(VizPalette.Soft)
+                                            .CommonSeriesSettings(s => s
+                                            .ArgumentField("age")
+                                            .ValueField("number")
+                                            .Type(SeriesType.Bar)
+                                            .Label(l => l.Visible(true))
+                                            .IgnoreEmptyPoints(true)
+
+                                            )
+                                            .Title(t => t
+                                            .Text(@sharedResource["Order Count Per Year"] )
+                                            .Subtitle(@sharedResource["The number of orders requested for each year"] )
+                                            )
+                                            .SeriesTemplate(t => t.NameField("age"))
+                                            .DataSource(ds => ds.Mvc()
+                                            .Controller("Statistics")
+                                            .LoadAction("GetYealyOrdersCountForShop"))
+                                            .ZoomAndPan(z => z.ArgumentAxis(ChartZoomAndPanMode.Both))
+                                            )
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div class="row welcome_message_conatiner p-5">
+        <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">@sharedResource["Welcome"]  @User.Identity.Name</h3>
+        </div>
+    </div>
+
+}
+
+

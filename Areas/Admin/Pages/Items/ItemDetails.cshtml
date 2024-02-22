@@ -1,0 +1,111 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Items.ItemDetailsModel
+
+@{
+    ViewData["Title"] = "ItemDetails";
+    
+  
+}
+
+
+<div class="card">
+<div class="card-header d-flex justify-content-between">
+    <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Details"]  </h3>
+    <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/admin/Shop/ShopDetails?id=@Model.Items.ShopId">@sharedResource["Back"]</a>
+</div>
+<div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+<div class="details_container">
+    <h4>@sharedResource["Items"]</h4>
+    <hr />
+    <dl class="row details_tb">
+        <dt class="col-sm-2">
+            @sharedResource["Name"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Items.ItemTitleAr)
+        </dd>
+        <dt class="col-sm-2">
+            @sharedResource["Picture"]
+        </dt>
+        <dd class="col-sm-10">
+            <img style="width:120px; height:120px" src="~/Images/Item/@Model.Items.ItemImage" />
+        </dd>
+        <dt class="col-sm-2">
+            @sharedResource["Description"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Items.ItemDescriptionEn)
+        </dd>
+        <dt class="col-sm-2">
+            @sharedResource["Price"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Items.ItemPrice)
+        </dd>
+        <dt class="col-sm-2">
+            @sharedResource["IsActive"]
+        </dt>
+         <dd class="col-sm-10">
+        @if(@Model.Items.IsActive.Value==true)
+        {
+           
+                   @sharedResource["Active"]
+
+                    }
+                    else
+                    {
+                         @sharedResource["Not Active"]
+                    }
+                </dd>
+                               <dt class="col-sm-2">
+                    @sharedResource["OutOfStock"]
+                </dt>
+                <dd class="col-sm-10">
+                     @if(@Model.Items.OutOfStock.Value==true)
+        {
+           
+                   @sharedResource["Quantity Is Out Of Stock"]
+
+                    }
+                    else
+                    {
+                         @sharedResource["Quantity Is Not Out Of Stock"]
+                    }
+                </dd>
+       
+                   
+                
+        <dt class="col-sm-2">
+            @sharedResource["Sort"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Items.OrderIndex)
+        </dd>
+     
+        <dt class="col-sm-2">
+            @sharedResource["Category"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Items.Category.CategoryTLAR)
+        </dd>
+   
+        <dt class="col-sm-2">
+            @sharedResource["Shop"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Items.Shop.ShopTLAR)
+        </dd>
+        <dt class="col-sm-2">
+            @sharedResource["SubCategory"]
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Items.SubCategory.SubCategoryTLAR)
+        </dd>
+    </dl>
+</div>
+<div>
+
+    
+</div>
+</div></div>

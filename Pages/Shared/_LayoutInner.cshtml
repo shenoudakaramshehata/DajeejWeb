@@ -1,0 +1,127 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@using Microsoft.AspNetCore.Localization;
+
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="SemiColonWeb" />
+     <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+     <link rel="shortcut icon" href="/admin/images/DajeejLogo.png">
+
+      @{
+       var locale = Context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+       var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+          if (BrowserCulture == "en-US")
+        {
+
+               <style>
+                html {
+                    direction: ltr !important;
+                }
+
+                body{
+                    direction: ltr !important;
+                }
+            </style>
+
+
+              
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Montserrat:400,700|Crete+Round:400i&display=swap" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/swiper.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/medical.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/dark.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/font-icons.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/medical-icons.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/magnific-popup.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/fonts.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/custom.css" type="text/css" />
+        }
+        else
+        {
+
+            
+            <style>
+                html {
+                    direction: rtl !important;
+                }
+                body{
+                    direction: rtl !important;
+                }
+
+            </style>
+            
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Montserrat:400,700|Crete+Round:400i&display=swap" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/bootstrap-rtl.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/style-rtl.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/swiper.css" type="text/css" />
+
+   
+    <link rel="stylesheet" href="~/Public/css/medical.css" type="text/css" />
+  
+
+    <link rel="stylesheet" href="~/Public/css/dark.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/font-icons.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/medical-icons.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="~/Public/css/magnific-popup.css" type="text/css" />
+
+    <link rel="stylesheet" href="~/Public/css/fonts.css" type="text/css" />
+
+    <link rel="stylesheet" href="~/Public/css/custom.css" type="text/css" />
+        }
+
+        }
+  
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+    <!-- Document Title
+    ============================================= -->
+    <title>Dajeej Site</title>
+
+</head>
+
+@*<body class="stretched page-transition" data-loader-html="<div id='css3-spinner-svg-pulse-wrapper'><svg id='css3-spinner-svg-pulse' version='1.2' height='210' width='550' xmlns='https://www.w3.org/2000/svg' viewport='0 0 60 60' xmlns:xlink='https://www.w3.org/1999/xlink'><path id='css3-spinner-pulse' stroke='#DE6262' fill='none' stroke-width='2' stroke-linejoin='round' d='M0,90L250,90Q257,60 262,87T267,95 270,88 273,92t6,35 7,-60T290,127 297,107s2,-11 10,-10 1,1 8,-10T319,95c6,4 8,-6 10,-17s2,10 9,11h210' /></svg></div>">*@
+<body>
+    <!-- Document Wrapper id="wrapper"
+    ============================================= -->
+    <div  class="clearfix">
+
+     
+          @await Html.PartialAsync("_Header")
+
+
+        @RenderBody()
+
+        @await Html.PartialAsync("_Footer")
+
+    </div><!-- #wrapper end -->
+    <!-- Go To Top
+    ============================================= -->
+    <div id="gotoTop" class="icon-angle-up rounded-circle"></div>
+
+    <!-- JavaScripts
+    ============================================= -->
+    <script src="~/Public/js/jquery.js"></script>
+   @* <script src="~/Public/js/plugins.min.js"></script>*@
+
+    <!-- Footer Scripts
+    ============================================= -->
+    <script src="~/Public/js/functions.js"></script>
+     @await RenderSectionAsync("Scripts", required: false)
+     @await Component.InvokeAsync("NToastNotify")
+
+</body>
+</html>

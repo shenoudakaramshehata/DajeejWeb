@@ -1,0 +1,188 @@
+﻿@page
+@model Dajeej.Areas.Shop.Pages.Orders.OrderDetailsModel
+@{
+}
+
+
+
+@{
+    ViewData["Title"] = "OrderDetails";
+    Layout = "~/Areas/Shop/Pages/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac"> @sharedResource["OrderDetails"]  </h3>
+        <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/shop/Orders/Orders">@sharedResource["Back"]</a>
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+        <div class="row order_details">
+            <div class="col-md-12 col-lg-6 mt-4">
+                <h4> @sharedResource["Customer_Information"]</h4>
+                <hr />
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["NameEn"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.Customer.NameAr </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["NameAr"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.Customer.NameEn </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div>@sharedResource["Phone"]</div>
+                    <div> @Model.OrderDetailsViewModel.Order.Customer.Mobile </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["Email"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.Customer.Email </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6 mt-4">
+                <h4> @sharedResource["Address_Information"] </h4>
+                <hr />
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["BuildingNo"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.CustomerAddress.Building </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["Street"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.CustomerAddress.Street </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["Area"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.CustomerAddress.Area </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["Avenue"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.CustomerAddress.Avenue </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["FloorNo"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.CustomerAddress.Floor </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["AdditionalDirection"] </div>
+                    <div> @Model.OrderDetailsViewModel.Order.CustomerAddress.AdditionalDirection </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6 mt-4">
+                <h4>@sharedResource["Order_Information"] </h4>
+                <hr />
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div>  @sharedResource["Date"]  </div>
+                    <div> @Model.OrderDetailsViewModel.Order.OrderDate </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["Serial"]  </div>
+                    <div> @Model.OrderDetailsViewModel.Order.OrderSerial </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["Total"]  </div>
+                    <div> @Model.OrderDetailsViewModel.Order.OrderTotal </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["Discount"]  </div>
+                    <div> @Model.OrderDetailsViewModel.Order.OrderDiscount </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["OrderNet"]  </div>
+                    <div> @Model.OrderDetailsViewModel.Order.OrderNet </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div> @sharedResource["Delivered"]  </div>
+                    <div> @Model.OrderDetailsViewModel.Order.IsDeliverd </div>
+                </div>
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div>@sharedResource["deliverycost"]  </div>
+                    <div> @Model.OrderDetailsViewModel.Order.Deliverycost </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-12 col-lg-6 mt-4">
+                <h4> @sharedResource["PaymentAndCoupon"] </h4>
+                <hr />
+                <div class="customer_info_container d-flex justify-content-between">
+                    <div>@sharedResource["PaymentMethodName"]    </div>
+                    <div> @Model.OrderDetailsViewModel.Order.PaymentMehod.PaymentMethodName </div>
+                </div>
+                @if (Model.OrderDetailsViewModel.Order.CouponId != null)
+                {
+                    <div class="customer_info_container d-flex justify-content-between">
+                        <div> @sharedResource["CouponAmount"]   </div>
+                        <div> @Model.OrderDetailsViewModel.Order.CouponAmount </div>
+                    </div>
+                    <div class="customer_info_container d-flex justify-content-between">
+                        <div> @sharedResource["CouponType"]   </div>
+                        <div> @Model.OrderDetailsViewModel.Order.CouponType.Title </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="customer_info_container d-flex justify-content-between">
+                        <div>@sharedResource["Coupon"]   </div>
+                        <div> @sharedResource["No_Coupon"] </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-12 col-lg-12 mt-4">
+                <h4> @sharedResource["Items"] </h4>
+                <hr />
+                <div class="row justify-content-center">
+                    @foreach (var item in Model.OrderDetailsViewModel.OrderItem)
+                    {
+                        <div class="col-md-12 col-lg-2 shadow-sm m-2 rounded product_container ">
+
+                            <div class="product_img_container">
+                                <img style="border-radius: 13%;" class="img-fluid" src="~/Images/@item.Item.ItemImage" />
+                            </div>
+                            <div class="product_order_details d-flex justify-content-between">
+                                <div> @sharedResource["Name"] </div>
+                                <div> @item.Item.ItemTitleAr </div>
+                            </div>
+                            <div class="product_order_details d-flex justify-content-between">
+                                <div> @sharedResource["Price"] </div>
+                                <div> @item.ItemPrice </div>
+                            </div>
+                            <div class="product_order_details d-flex justify-content-between">
+                                <div> @sharedResource["Quantity"] </div>
+                                <div> @item.ItemQuantity </div>
+                            </div>
+                            <div class="product_order_details d-flex justify-content-between">
+                                <div>  @sharedResource["Total"] </div>
+                                <div> @item.Total </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .product_container {
+        background-color: #4b49ac;
+        padding: 14px;
+    }
+
+    .product_img_container {
+        width: 151px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        padding: 9px;
+    }
+
+    .product_order_details {
+        color: white
+    }
+</style>

@@ -1,0 +1,74 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Categories.AddModel
+@{
+}
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-header d-flex justify-content-between align-items-center">
+                            @sharedResource["Add"]  @sharedResource["Category"]
+                            <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+
+                        <br />
+                        <form id="form" method="post" enctype="multipart/form-data">
+                            @(Html.DevExtreme().Form<Dajeej.Models.Category>()
+
+            .Items(items => {
+
+
+            items.AddSimpleFor(m => m.CategoryTLAR).IsRequired(true).Label(k => k.Text(sharedResource["TlAr"]));
+            items.AddSimpleFor(m => m.CategoryTLEN).IsRequired(true).Label(k => k.Text(sharedResource["TlEn"]));
+            items.AddSimpleFor(m => m.IsActive).Label(k => k.Text(sharedResource["IsActive"]));
+            items.AddSimpleFor(m => m.OrderIndex).IsRequired(true).Label(k => k.Text(sharedResource["Sort"])).Editor(e => e.NumberBox().Value(null));
+
+            items.AddSimpleFor(m => m.CategoryPic).IsRequired(true).Label(k => k.Text(sharedResource["Picture"])).Template(@<text>
+                    @(Html.DevExtreme().FileUploader()
+                .Name("Category.CategoryPic")
+                .SelectButtonText(sharedResource["Select_photo"])
+                .LabelText("")
+                .Accept("image/*")
+                .UploadMode(FileUploadMode.UseForm)
+                 .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+
+                .Height(70)
+                    )
+
+                </text> ).IsRequired(true);
+
+                items.AddSimpleFor(m => m.CategoryIcon).IsRequired(true).Label(k => k.Text(sharedResource["Picture"])).Template(@<text>
+                    @(Html.DevExtreme().FileUploader()
+                .Name("Category.CategoryIcon")
+                .SelectButtonText(sharedResource["Icon"])
+                .LabelText("")
+                .Accept("image/*")
+                .UploadMode(FileUploadMode.UseForm)
+                 .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+
+                .Height(70)
+                    )
+
+                </text> ).IsRequired(true);
+                items.AddButton()
+        .ColSpan(3)
+        .HorizontalAlignment(HorizontalAlignment.Right)
+        .ButtonOptions(b => b.Text(sharedResource["Save"])
+        .Type(ButtonType.Success)
+        .UseSubmitBehavior(true)).CssClass("invers");
+
+
+
+            })
+            )
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

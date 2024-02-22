@@ -1,0 +1,318 @@
+﻿@page
+@model Dajeej.Pages.ContactusModel
+@{
+	Layout = "_LayoutInner";
+}
+
+
+
+	@*<!-- Page Title
+		============================================= -->
+		<section id="page-title" class="page-title-parallax" style="background-image: url('public/images/appointment/page-title-bg.jpg'); background-position: bottom center; background-size: cover; padding: 80px 0;">
+
+			<div class="container clearfix">
+				<h1>Appointment</h1>
+				<span>A Short Page Title Tagline</span>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#">Home</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Appointment</li>
+				</ol>
+			</div>
+
+		</section><!-- #page-title end -->*@
+<section id="page-title" class="page-title-parallax" style="background-image: url('public/images/slider/reg1.jpg'); background-position: bottom center; background-size: cover; padding: 80px 0;">
+
+    @*<div class="container clearfix">
+        <h1>Register</h1>
+        <span>A Short Page Title Tagline</span>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Appointment</li>
+        </ol>
+    </div>*@
+      <div class="container clearfix">
+        @*<h1>Register</h1>*@
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" ><a ><h1 class="setNewColor">@sharedResource["Contact Us"]</h1></a></li>
+           @* <li class="breadcrumb-item active" aria-current="page">Appointment</li>*@
+        </ol>
+    </div>
+
+</section><!-- #page-title end -->
+
+			<div class="section row p-0 align-items-stretch dark topmargin-sm">
+			<div class="col-lg-7">
+						@* <div class="col-12 mt-2 mb-3">
+                                <div class="card p-3 bg-light">
+                                    <div class="car-body">
+                                        <h4 class="mb-2">Location</h4>*@
+                                        <div class="form-group row">
+                                            <div id="map" style="height:602px;width:800px;margin:auto"></div>
+                                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>
+
+                                        </div>
+
+                                        
+
+                                @*    </div>
+                                </div>
+                            </div>*@
+					</div>
+					<div id="booking-appointment-form" class="col-lg-5 p-0">
+						<div class="bg-color form-widget col-padding" data-loader="button">
+							<h2>@sharedResource["Contact Us"]</h2>
+							<div class="form-result"></div>
+							<form class="row mb-0" enctype="multipart/form-data" method="post">
+								<div class="form-process">
+									<div class="css3-spinner">
+										<div class="css3-spinner-scaler"></div>
+									</div>
+								</div>
+								<div class="col-md-12 form-group">
+									<label asp-for="contact.FullName">@sharedResource["Name:"]</label>
+									<input asp-for="contact.FullName"  class="form-control not-dark required" value="">
+								</div>
+								
+								<div class="col-md-12 form-group">
+									<label asp-for="contact.Email">@sharedResource["Email Address:"]</label>
+									<input asp-for="contact.Email"  class="form-control not-dark required" value="">
+								</div>
+								<div class="col-md-12 form-group">
+									<label asp-for="contact.Msg">@sharedResource["Message:"]</label>
+									<textarea  asp-for="contact.Msg" class="form-control not-dark required" cols="30" rows="5"></textarea>
+								</div>
+								
+								<div class="w-100"></div>
+								<div class="col-md-5">
+									<div class="row">
+										
+									</div>
+								</div>
+								
+								<div class="w-100"></div>
+								<div class="col-12 form-group d-none">
+									<input type="text" name="template-medical-botcheck" value="" />
+								</div>
+								<div class="col-12 form-group text-center">
+									<button class="button button-white button-light button-rounded m-0" type="submit" value="submit">@sharedResource["Sending"]</button>
+								</div>
+								<input type="hidden" name="prefix" value="template-medical-">
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+@*<section id="content">
+	<div class="content-wrap">
+		<div class="container clearfix">
+			<div class="form-widget">
+				<div class="form-result"></div>
+				<div class="row">
+					<div class="col-lg-4 order-lg-1 mb-4">
+						<div class="card bg-light topmargin-sm">
+							<div class="card-body">
+								<h4 class="mb-3 d-block">Your Price</h4>
+								<h2 class="car-rent-price h1 fw-semibold">$0</h2>
+								<div class="line line-sm"></div>
+								<ul class="iconlist mb-0">
+									<li class="h6 pb-1"><i class="icon-line-circle-check"></i> Free 1st Class Insurance</li>
+									<li class="h6 pb-1"><i class="icon-line-circle-check"></i> Free Unlimited Mileage</li>
+									<li class="h6 pb-1"><i class="icon-line-circle-check"></i> Cancel at Any Time, Free of Charge</li>
+									<li class="h6 pb-1"><i class="icon-line-circle-check"></i> Credit Card not required</li>
+									<li class="h6 pb-1"><i class="icon-line-circle-check"></i> Pay when you see the Car</li>
+									<li class="h6"><i class="icon-line-circle-check"></i> Small Cash Deposit only</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<form id="car-rental" class="row" action="include/form.php" method="post" enctype="multipart/form-data" novalidate="novalidate">
+							<div class="form-process">
+								<div class="css3-spinner">
+									<div class="css3-spinner-scaler"></div>
+								</div>
+							</div>
+						<div class="col-12 form-group">
+										<label>Select Plan:</label><br>
+										<div class="row justify-content-center">
+											<label for="data-plan-starter" class="col-sm-6 col-md-4">
+												<div class="pricing-box text-center shadow-none border">
+													<input type="radio" name="data-plans-selected" class="required mt-3" id="data-plan-starter" autocomplete="off" data-price="30" value="Starter">
+													<div class="pricing-title bg-transparent">
+														<h3 class="nott ls0">Starter</h3>
+													</div>
+													<div class="pricing-price">
+														<span class="price-unit">$</span>7<span class="price-tenure nott">/mo</span>
+													</div>
+													<div class="pricing-features border-0 bg-transparent">
+														<ul>
+															<li class="nott ls0 fw-normal"><strong>1</strong> GB</li>
+															<li class="nott ls0 fw-normal"><strong>Full</strong> Access</li>
+															<li class="nott ls0 fw-normal"><i class="icon-code"></i> Source Files</li>
+															<li class="nott ls0 fw-normal"><strong>100</strong> User Accounts</li>
+															<li class="nott ls0 fw-normal"><strong>1 Year</strong> License</li>
+														</ul>
+													</div>
+												</div>
+											</label>
+
+											<label for="data-plan-professional" class="col-sm-6 col-md-4">
+												<div class="pricing-box text-center shadow-none border">
+													<input type="radio" name="data-plans-selected" class="required mt-3" id="data-plan-professional" autocomplete="off" data-price="30" value="Professional">
+													<div class="pricing-title bg-transparent">
+														<h3 class="nott ls0">Professional</h3>
+													</div>
+													<div class="pricing-price">
+														<span class="price-unit">$</span>12<span class="price-tenure nott">/mo</span>
+													</div>
+													<div class="pricing-features border-0 bg-transparent">
+														<ul>
+															<li class="nott ls0 fw-normal"><strong>5</strong> GB</li>
+															<li class="nott ls0 fw-normal"><strong>Full</strong> Access</li>
+															<li class="nott ls0 fw-normal"><i class="icon-code"></i> Source Files</li>
+															<li class="nott ls0 fw-normal"><strong>500</strong> User Accounts</li>
+															<li class="nott ls0 fw-normal"><strong>1 Year</strong> License</li>
+														</ul>
+													</div>
+												</div>
+											</label>
+
+											<label for="data-plan-business" class="col-sm-6 col-md-4">
+												<div class="pricing-box text-center shadow-none border">
+													<input type="radio" name="data-plans-selected" class="required mt-3" id="data-plan-business" autocomplete="off" data-price="30" value="Business">
+													<div class="pricing-title bg-transparent">
+														<h3 class="nott ls0">Business</h3>
+													</div>
+													<div class="pricing-price">
+														<span class="price-unit">$</span>15<span class="price-tenure nott">/mo</span>
+													</div>
+													<div class="pricing-features border-0 bg-transparent">
+														<ul>
+															<li class="nott ls0 fw-normal"><strong>10</strong> GB</li>
+															<li class="nott ls0 fw-normal"><strong>Full</strong> Access</li>
+															<li class="nott ls0 fw-normal"><i class="icon-code"></i> Source Files</li>
+															<li class="nott ls0 fw-normal"><strong>1000</strong> User Accounts</li>
+															<li class="nott ls0 fw-normal"><strong>Lifetime</strong> License</li>
+														</ul>
+													</div>
+												</div>
+											</label>
+										</div>
+									</div>
+							<div class="col-12">
+								<div class="row input-daterange">
+									<div class="col-md-6 form-group">
+										<label for="car-rental-pickup-date">Pickup Date:</label>
+										<input type="text" name="car-rental-pickup-date" id="car-rental-pickup-date" class="form-control input-datepicker text-start required" value="" placeholder="Select Pickup Date">
+									</div>
+									<div class="col-md-6 form-group">
+										<label for="car-rental-dropoff-date">Drop Off Date:</label>
+										<input type="text" name="car-rental-dropoff-date" id="car-rental-dropoff-date" class="form-control input-datepicker text-start" value="" placeholder="Select Drop-Off Date">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="car-rental-pickup-address" class="mb-3">Pickup Location<small class="text-danger">*</small></label><br>
+								<div class="btn-group my-tab nav" role="group">
+									<a href="#tab-pickup-airport" class="btn btn-outline-secondary flex-fill" data-bs-toggle="tab">
+										<input type="radio" name="car-rental-pickup-address" class="btn-check" id="car-rental-pickup-airport" value="">Airport
+									</a>
+									<a href="#tab-pickup-hotel" class="btn btn-outline-secondary flex-fill" data-bs-toggle="tab">
+										<input type="radio" class="btn-check" name="car-rental-pickup-address" id="car-rental-pickup-hotel" value="">Hotel
+									</a>
+								</div>
+								<div class="tab-content">
+									<div class="tab-pane fade mt-3" id="tab-pickup-airport">
+										<label>Flight Number:</label>
+										<input type="text" name="car-rental-pickup-flight-number" id="car-rental-pickup-flight-number" class="form-control required" value="" placeholder="Enter Flight Number">
+									</div>
+									<div class="tab-pane fade mt-3" id="tab-pickup-hotel">
+										<label>Hotel Name:</label>
+										<input type="text" name="car-rental-pickup-hotel-name" id="car-rental-pickup-hotel-name" class="form-control required" value="" placeholder="Enter Hotel Name">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="car-rental-dropoff-address" class="mb-3">Drop-Off Location<small class="text-danger">*</small></label><br>
+								<div class="btn-group my-tab nav" role="group">
+									<a href="#tab-dropoff-airport" class="btn btn-outline-secondary flex-fill" data-bs-toggle="tab">
+										<input type="radio" class="btn-check" name="car-rental-dropoff-address" id="car-rental-dropoff-airport" value="Airport">Airport
+									</a>
+									<a href="#tab-dropoff-hotel" class="btn btn-outline-secondary flex-fill" data-bs-toggle="tab">
+										<input type="radio" class="btn-check" name="car-rental-dropoff-address" id="car-rental-dropoff-hotel" value="">Hotel
+									</a>
+								</div>
+								<div class="tab-content">
+									<div class="tab-pane fade" id="tab-dropoff-airport"></div>
+									<div class="tab-pane fade mt-3" id="tab-dropoff-hotel">
+										<label>Hotel Name:</label>
+										<input type="text" name="car-rental-dropoff-hotel-name" id="car-rental-dropoff-hotel-name" class="form-control required" value="" placeholder="Enter Hotel Name">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="car-rental-name">First Name<small class="text-danger">*</small></label>
+								<input type="text" id="car-rental-name" name="car-rental-name" value="" class="form-control required" placeholder="Enter your Full Name">
+							</div>
+							<div class="col-md-6 form-group">
+								<label for="car-rental-contact">Contact Number<small class="text-danger">*</small></label>
+								<input type="text" name="car-rental-contact" id="car-rental-contact" class="form-control required" value="" placeholder="Enter your contact Number">
+							</div>
+							<div class="col-12 form-group">
+								<label for="car-rental-email">Email Address<small class="text-danger">*</small></label>
+								<input type="email" name="car-rental-email" id="car-rental-email" class="form-control required" value="" placeholder="user@company.com">
+							</div>
+							<div class="col-12 mt-2 mb-3">
+								<div class="card p-3 bg-light">
+									<div class="car-body">
+										<h3 class="mb-2">Book Without Paying</h3>
+										<p class="mb-0">Book now and receive confirmation email within 1 day. Pay your total in Melbourne when you receive the car.</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 d-none">
+								<input type="text" id="car-rental-botcheck" name="car-rental-botcheck" value="">
+							</div>
+							<div class="col-12">
+								<button type="submit" name="car-rental-submit" class="btn btn-success btn-lg">Reserve Now</button>
+							</div>
+							<input type="hidden" name="prefix" value="car-rental-">
+							<input type="hidden" name="replyto" value="car-rental-email">
+							<input type="hidden" name="autoresponder" value="true">
+							<input type="hidden" name="subject" value="New Car Rental Request">
+							<input type="hidden" name="ar_title" value="Your Booking">
+							<input type="hidden" name="ar_message" value="Dear {car-rental-name},<br><br>Your Car <strong>{car-rental-selected-car}</strong> Booking has been confirmed. Our Driver will pick you up on <strong>{car-rental-pickup-date}</strong> at <strong>{car-rental-pickup-address}</strong> <strong>{car-rental-pickup-hotel-name}</strong>.<br><br>Thank You.">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>*@
+<script>
+	var flag=false;
+                function initMap() {
+                    
+                    var myLatlng = { lat: 29.378586, lng: 47.990341 };
+                    var map = new google.maps.Map(document.getElementById("map"), {
+                        zoom: 4,
+                        center: myLatlng,
+                    });
+
+                    var infoWindow = new google.maps.InfoWindow();
+					 var MarkerObj={lat: myLatlng.lat, lng: myLatlng.lng};
+                        var marker = new google.maps.Marker({
+                            position: MarkerObj,
+                            map: map
+                        });
+
+                    infoWindow.open(map, marker);
+					infoWindow.close();
+                   
+                }
+                window.initMap = initMap;
+               
+                   
+
+</script>

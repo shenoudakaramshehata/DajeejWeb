@@ -1,0 +1,89 @@
+﻿@page
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Plans List"]  </h3>
+        <a asp-page="Add" class="btn btn-primary">@sharedResource["Add"]  @sharedResource["Plan"]  </a>
+        
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+        @(Html.DevExtreme().DataGrid<Dajeej.Models.Plan>()
+        .DataSource(ds => ds.Mvc()
+        .Controller("Plans")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("PlanId")
+        )
+        .RemoteOperations(true)
+        .Columns(columns => {
+
+        columns.AddFor(m => m.ArabicTitle).Caption(@sharedResource["Arabic Title"]);
+
+        columns.AddFor(m => m.EnglishTitle).Caption(@sharedResource["English Title"]);
+        columns.AddFor(m => m.Price).Caption(@sharedResource["Price"]);
+
+
+        columns.AddFor(m => m.Period).Caption(@sharedResource["Period"]);
+
+        columns.AddFor(m => m.NoOfItems).Caption(@sharedResource["No Of Items"]);
+
+        columns.AddFor(m => m.VipCollection).Caption(@sharedResource["VipCollection"]);
+
+        columns.AddFor(m => m.Reports).Caption(@sharedResource["Reports"]);
+
+        columns.AddFor(m => m.Dashboard).Caption(@sharedResource["Dashboard"]);
+
+        columns.AddFor(m => m.AdzBanners).Caption(@sharedResource["AdzBanners"]);
+
+
+        columns.AddFor(m => m.CountryId).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("CountryLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        ).Caption(sharedResource["Country"]);
+
+        columns.Add().Caption(sharedResource["Actions"]).Width(200).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+
+                        @*<div class="btn-group" role="group" aria-label="Basic example">*@
+                        <a class="btn btn-primary btn-sm"  href="/Admin/Plans/Details?id=<%- data.PlanId %>"> <i class="fas fa-eye"></i> </a>
+                                <a class="btn btn-success btn-sm mx-2"  href="/Admin/Plans/Edit?id=<%- data.PlanId %>">  <i class="fas fa-edit"></i> </a>
+
+                                 <a class="btn btn-danger btn-sm" href="/Admin/Plans/Delete?id=<%- data.PlanId %>">  <i class="fas fa-trash"></i> </a>
+                          @*  </div>*@
+                            </text>);
+
+                        })
+       .Paging(paging => paging.PageSize(10))
+                        .Pager(pager =>
+                        {
+                            pager.Visible(true);
+                            pager.DisplayMode(GridPagerDisplayMode.Full);
+                            pager.ShowPageSizeSelector(true);
+                            pager.AllowedPageSizes(new JS("[5, 10, 'all']"));
+                            pager.ShowInfo(true);
+                            pager.ShowNavigationButtons(true);
+
+                        })
+                        .HeaderFilter(headerFilter => headerFilter.Visible(true)).ShowColumnLines(true)
+                        .ShowRowLines(true)
+                        .RowAlternationEnabled(true)
+                        .AllowColumnReordering(true)
+                        .ShowRowLines(true)
+                        .ShowBorders(true)
+                        .SearchPanel(searchPanel => searchPanel
+                        .Visible(true)
+                        .Width(240)
+                        .Placeholder(sharedResource["SearchTxt"]))
+                        .RemoteOperations(true)
+                        .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+                                        )
+    </div>
+</div>

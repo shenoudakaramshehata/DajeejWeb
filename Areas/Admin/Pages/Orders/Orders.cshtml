@@ -1,0 +1,102 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Orders.OrdersModel
+@{
+    ViewData["active"] = "active";
+
+}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Orders"]</h3>
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+        @(Html.DevExtreme().DataGrid<Dajeej.Models.Order>()
+        .DataSource(ds => ds.Mvc()
+        .Controller("Orders")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("OrderId")
+        )
+        .RemoteOperations(true)
+        .Columns(columns => {
+
+        
+
+
+      @*  columns.AddFor(m => m.Customer.NameEn).Caption(sharedResource["Customer"]);*@
+       @* columns.AddFor(m => m.Customer.NameAr).Caption(sharedResource["Customer"]).Visible(!Model.ArLang);*@
+         columns.AddFor(m => m.CustomerId).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Orders").LoadAction("CustomerLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+
+    ).Caption(sharedResource["Customer"]);
+
+@*        columns.AddFor(m => m.Customer.Mobile).Caption(sharedResource["Phone"]);*@
+        columns.AddFor(m => m.IsDeliverd).Caption(sharedResource["Delivered"]);
+        columns.AddFor(m => m.PaymentMethodId).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Orders").LoadAction("PaymentsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+
+    ).Caption(sharedResource["PaymentMethod"]);
+   @*     columns.AddFor(m => m.PaymentMehod.PaymentMethodName).Caption(sharedResource["PaymentMethod"]);*@
+        columns.AddFor(m => m.Deliverycost).Caption(sharedResource["deliverycost"]);
+        columns.AddFor(m => m.OrderDiscount).Caption(sharedResource["Discount"]);
+        @*columns.AddFor(m => m.Shop.ShopTLAR).Caption(sharedResource["Shop"]).Visible(Model.ArLang);
+        columns.AddFor(m => m.Shop.ShopTLEN).Caption(sharedResource["Shop"]).Visible(!Model.ArLang);
+*@
+columns.AddFor(m => m.ShopId).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Orders").LoadAction("ShopsLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+
+    ).Caption(sharedResource["Shop"]);
+                 columns.Add().Caption(sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+        <a href="/Admin/Orders/OrderDetails?id=<%- data.OrderId %>">@sharedResource["Details"] </a>
+        </text>);
+
+        })
+        .Editing(e => e.Mode(GridEditMode.Popup)
+        .AllowUpdating(false)
+        .AllowAdding(false)
+        .AllowDeleting(false)
+        .Popup(p => p
+        .Title("Vehicle Type Info")
+        .ShowTitle(true)
+        .Width(600)
+        .Height(250)
+        )
+        )
+        .Paging(paging => paging.PageSize(10))
+        .Pager(pager =>
+        {
+        pager.Visible(true);
+        pager.DisplayMode(GridPagerDisplayMode.Full);
+        pager.ShowPageSizeSelector(true);
+        pager.AllowedPageSizes(new JS("[5, 10, 'all']"));
+        pager.ShowInfo(true);
+        pager.ShowNavigationButtons(true);
+        })
+        .ShowBorders(true)
+        .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+        )
+        .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+       .Placeholder(sharedResource["SearchTxt"])
+        )
+        .HeaderFilter(headerFilter => headerFilter.Visible(true)).ShowColumnLines(false)
+        .ShowRowLines(true)
+        .RowAlternationEnabled(true)
+        .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+        )
+    </div>
+
+</div>

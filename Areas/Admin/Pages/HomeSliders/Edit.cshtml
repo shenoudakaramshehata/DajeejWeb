@@ -1,0 +1,86 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.HomeSliders.EditModel
+@{
+}
+
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac"> @sharedResource["Edit"]  @sharedResource["HomeSlider"]</h3>
+        <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+    </div>
+    <div class="form_inside" style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+        <form id="form" method="post" enctype="multipart/form-data">
+           
+            @(Html.DevExtreme().Form<Dajeej.Models.Slider>
+            ()
+
+            .ID("HomeSliderForm")
+            
+
+
+            .FormData(Model.slider)
+
+            .Items(items => {
+
+
+  
+
+          
+
+            
+
+           
+
+             items.AddSimpleFor(s => s.CountryId)
+            .Editor(e => e
+            .Lookup()
+            .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("CountryLookup").Key("Value"))
+            .DisplayExpr("Text")
+            .ValueExpr("Value")
+             .Placeholder(sharedResource["Select "])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+
+            ).Label(k => k.Text(sharedResource["Country"])).Visible(true).Name("CountryId").IsRequired(true);
+
+
+            items.AddSimpleFor(m => m.OrderIndex).Label(k => k.Text(sharedResource["Sort"])).IsRequired(true);
+            items.AddSimpleFor(m => m.IsActive).Label(k => k.Text(sharedResource["Active"]));
+
+
+            items.AddSimple().Label(k => k.Text(sharedResource["Picture"])).Template(@<text>
+                    <div>
+                        <img width="250" height="250" src="/Images/Slider/@Model.slider.Pic" alt="Slider Picture" />
+                    </div>
+                </text> );
+            items.AddSimpleFor(m => m.Pic).Label(k => k.Text(sharedResource["Change_Picture"])).Template(@<text>
+                    @(Html.DevExtreme().FileUploader()
+                .Name("Photo")
+                .SelectButtonText(sharedResource["Change_Picture"])
+                .LabelText("")
+                .Accept("image/*")
+                .UploadMode(FileUploadMode.UseForm)
+                .Height(70)
+                    )
+
+                </text> );
+            items.AddButton()
+            .ColSpan(3)
+            .HorizontalAlignment(HorizontalAlignment.Left)
+            .ButtonOptions(b => b.Text(sharedResource["Save"])
+            .Type(ButtonType.Success)
+            .UseSubmitBehavior(true)).CssClass("invers");
+
+
+
+            })
+            )
+
+        </form>
+    </div>
+</div>

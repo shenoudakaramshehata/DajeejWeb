@@ -1,0 +1,144 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Dajeej.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject ApplicationDbContext _db
+@using Microsoft.AspNetCore.Localization;
+
+@{
+    string adminRoleId = _db.Roles.Where(e => e.Name == "Admin").FirstOrDefault().Id;
+    var UserAdminId = _db.UserRoles.Where(e => e.RoleId == adminRoleId).FirstOrDefault().UserId;
+    var user = UserManager.Users.Where(e => e.Id == UserAdminId).FirstOrDefault();
+    var currentuser = await UserManager.GetUserAsync(User);
+}
+
+<!-- Top Bar
+     ============================================= -->
+<div id="top-bar">
+    <div class="container clearfix">
+
+        <div class="row justify-content-between">
+            <div class="col-12 col-md-auto d-none d-md-flex">
+
+                <!-- Top Links
+                ============================================= -->
+                <div class="top-links">
+                    <ul class="top-links-container">
+                        @{
+                            if(user!=null){
+                        <li class="top-links-item"><a ><i class="icon-phone3"></i> @user.PhoneNumber</a></li>
+                        <li class="top-links-item"><a  class="nott"><i class="icon-envelope2"></i> @user.Email</a></li>
+                          }
+                        }
+                       @* <li class="top-links-item"><a href="#"><i class="icon-time"></i> Timings</a></li>*@
+                    </ul>
+                </div><!-- .top-links end -->
+
+            </div>
+
+            <div class="col-12 col-md-auto">
+
+                <!-- Top Links
+                ============================================= -->
+                <div class="top-links">
+                    <ul class="top-links-container">
+                        <li class="top-links-item">
+                            @{
+                                 var locale = Context.Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                                    var BrowserCulture = locale.RequestCulture.UICulture.ToString();
+                                if (BrowserCulture == "en-US"){
+                                    <a href="#">EN</a>
+                                }
+                                else
+                                {
+                                     <a href="#">AR</a>
+                                    
+                                }
+
+    }
+                            <ul class="top-links-sub-menu">
+                                <li class="top-links-item">
+                                    <a asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="en-US" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()">
+                                        <img src="~/Public/images/icons/flags/french.png" alt="user-image" height="12"> <span class="align-middle"> @sharedResource["English"] </span>
+                                    </a>
+                                </li>
+                                <li class="top-links-item">
+                                    <a asp-controller="Setting" asp-action="ChangeLanguage" asp-route-culture="ar-EG" asp-route-url="@Context.Request.Path@Context.Request.QueryString.ToString()">
+                                        <img width="18" height="18" src="~/Public/images/icons/flags/italian.png" alt="user-image"> <span class="align-middle">@sharedResource["Arabic"]   </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="top-links-item"><a href="Register" class="bg-color text-white">@sharedResource["Register Now"]</a></li>
+                    </ul>
+                </div><!-- .top-links end -->
+
+            </div>
+        </div>
+
+    </div>
+</div><!-- #top-bar end -->
+<!-- Header
+============================================= -->
+<header id="header" data-menu-padding="28" data-sticky-menu-padding="8">
+    <div id="header-wrap">
+        <div class="container">
+            <div class="header-row">
+
+                <!-- Logo
+                ============================================= -->
+                <div id="logo">
+                    <a href="index.html" class="standard-logo"><img src="/Admin/images/DajeejLogo.png" alt="Dajeej Logo" style="padding: 10px;"></a>
+                    <a href="index.html" class="retina-logo"><img src="/Admin/images/DajeejLogo.png" alt="Dajeej Logo" style="padding: 10px;"></a>
+                </div><!-- #logo end -->
+
+                <div id="primary-menu-trigger">
+                    <svg class="svg-trigger" viewBox="0 0 100 100"><path d="m 30,33 h 40 c 3.722839,0 7.5,3.126468 7.5,8.578427 0,5.451959 -2.727029,8.421573 -7.5,8.421573 h -20"></path><path d="m 30,50 h 40"></path><path d="m 70,67 h -40 c 0,0 -7.5,-0.802118 -7.5,-8.365747 0,-7.563629 7.5,-8.634253 7.5,-8.634253 h 20"></path></svg>
+                </div>
+
+                <!-- Primary Navigation
+                ============================================= -->
+                <nav class="primary-menu style-3 menu-spacing-margin">
+
+                    <ul class="menu-container">
+                        <li class="menu-item current"><a class="menu-link" href="index"><div>@sharedResource["Home"]</div></a></li>
+                        <li class="menu-item"><a class="menu-link" href="About"><div>@sharedResource["About Us"]</div></a></li>
+                        <li class="menu-item"><a class="menu-link" href="#Download"><div>@sharedResource["Download"]</div></a></li>
+                        
+                        <li class="menu-item"><a class="menu-link" href="#Features"><div>@sharedResource["Features"] </div></a></li>
+                       <li class="menu-item"><a class="menu-link" href="Register"><div>@sharedResource["Register"]</div></a></li>
+                        <li class="menu-item"><a class="menu-link" href="Contactus"><div>@sharedResource["Contact Us"]</div></a></li>
+                        @{
+                            if (currentuser == null)
+                            {
+                                <li class="menu-item"><a class="menu-link" asp-area="Identity" asp-page="/Account/Login"><div>@sharedResource["Login"]</div></a></li>
+                                
+                            }
+                            else{
+                                  if ((User.Identity.IsAuthenticated && User.IsInRole("Admin")))
+        {
+                            <li class="menu-item"><a class="menu-link"  asp-area="Admin" asp-page="/index"><div>@sharedResource["Dashboard"]</div></a></li>
+          
+        }
+                                     if ((User.Identity.IsAuthenticated && User.IsInRole("Shop")))
+        {
+                            <li class="menu-item"><a class="menu-link"  asp-area="Shop" asp-page="/index"><div>@sharedResource["Dashboard"]</div></a></li>
+          
+        }
+                                //if(currentuser.ro)
+                               //<form asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                            //<li class="menu-item"><a class="menu-link"  asp-area="Identity" asp-page="/Account/Logout"><div>@sharedResource["Logout"]</div></a></li>
+                             //</form>
+                            }
+
+                            }
+                            
+                    </ul>
+
+                </nav><!-- #primary-menu end -->
+
+            </div>
+        </div>
+    </div>
+    <div class="header-wrap-clone"></div>
+</header><!-- #header end -->

@@ -1,0 +1,63 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Subscriptions.AddModel
+@{
+}
+
+
+
+<div class="card">
+
+    <div class="card-header">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Add Subscription"]   </h3>
+    </div>
+
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+        <form id="form" method="post" enctype="multipart/form-data">
+            <div class="text-danger" asp-validation-summary="All"></div>
+
+            <div class="row form_inside">
+                <div class="col-sm-12 col-lg-6" style="margin-top: 3px;">
+
+
+
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["Plan"]:</div>
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().SelectBoxFor(s => s.Subscription.PlanId)
+                            .ValueExpr("Value")
+                            .DisplayExpr("Text")
+                            .DataSource(ds => ds.WebApi().Controller("Plans").LoadAction("GetPlansByCountryLookup").Key("Value")
+                            .LoadParams(new { id = new JS(@Model.Id.ToString()) })).RtlEnabled(true)
+                            .DisplayExpr("Text")
+                            .Placeholder(sharedResource["Select Plan"]) 
+                                                            
+                            .ShowClearButton(true)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Active"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().CheckBoxFor(s => s.Subscription.Active)
+
+
+                            )
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            @(Html.DevExtreme().Button()
+            .ID("button")
+            .Text(sharedResource["Save"])
+            .Type(ButtonType.Success)
+            .UseSubmitBehavior(true)
+            )
+        </form>
+    </div>
+</div>

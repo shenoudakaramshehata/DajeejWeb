@@ -1,0 +1,165 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Banners.AddModel
+@{
+}
+
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac"> @sharedResource["Add"]  @sharedResource["Banner"]  </h3>
+        <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+    </div>
+    <div class="form_inside" style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+        <div class="text-danger DeleteValidation ">@Html.ValidationMessage("Validation") </div>
+
+        <form id="form" method="post" enctype="multipart/form-data">
+            @Html.Hidden("ItemId", "")
+          
+            @Html.Hidden("ShopId", "")
+            @(Html.DevExtreme().Form<Dajeej.Models.Banner>()
+
+            .ID("HomeSliderForm")
+            .OnInitialized("onFormInitialized")
+
+            .Items(items => {
+
+
+            items.AddSimpleFor(m => m.EntityTypeNotifyId).IsRequired(true).Label(k => k.Text(sharedResource["Type"]))
+            .Editor(e => e
+            .Lookup()
+            .DataSource(ds => ds.WebApi().Controller("PublicNotifications").LoadAction("SliderTypeLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+              .Placeholder(sharedResource["Select"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+            .OnValueChanged("onValueChanged")
+
+            );
+
+           
+
+            items.AddSimple()
+            .Editor(e => e
+            .Lookup()
+            .DataSource(ds => ds.WebApi().Controller("PublicNotifications").LoadAction("ItemLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+             .Placeholder(sharedResource["Select Item"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+            .OnSelectionChanged("ItemValueChanged")
+
+
+            ).Label(k => k.Text(sharedResource["Item"])).Visible(false).Name("Item").IsRequired(true);
+            items.AddSimple()
+            .Editor(e => e
+            .Lookup()
+            .DataSource(ds => ds.WebApi().Controller("PublicNotifications").LoadAction("ShopLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+            .Placeholder(sharedResource["Select Shop"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+            .OnSelectionChanged("ShopValueChanged")
+
+
+            ).Label(k => k.Text(sharedResource["Shop"])).Visible(false).Name("Shop").IsRequired(true);
+
+
+             items.AddSimpleFor(s => s.CountryId)
+            .Editor(e => e
+            .Lookup()
+            .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("CountryLookup").Key("Value"))
+            .DisplayExpr("Text")
+            .ValueExpr("Value")
+            .Placeholder(sharedResource["Select Country"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+            ).Label(k => k.Text(sharedResource["Country"])).Visible(true).Name("CountryId").IsRequired(true);
+
+
+
+
+            items.AddSimpleFor(m => m.IsActive).Label(k => k.Text(sharedResource["IsActive"]));
+            items.AddSimpleFor(m => m.OrderIndex).Label(k => k.Text(sharedResource["Sort"])).IsRequired(true).Editor(e => e.NumberBox().Value(null));
+
+            items.AddSimpleFor(m => m.Pic).IsRequired(true).Label(k => k.Text(sharedResource["Picture"])).Template(@<text>
+                    @(Html.DevExtreme().FileUploader()
+                .Name("Photo")
+                .SelectButtonText(sharedResource["Select_photo"])
+                .LabelText("")
+                .Accept("image/*")
+                .UploadMode(FileUploadMode.UseForm)
+                .Height(70)
+                    )
+
+                </text> );
+
+                items.AddEmpty();
+
+            items.AddButton()
+            .ColSpan(3)
+            .HorizontalAlignment(HorizontalAlignment.Left)
+            .ButtonOptions(b => b.Text(sharedResource["Save"])
+            .Type(ButtonType.Success)
+            .UseSubmitBehavior(true)).CssClass("invers");
+
+
+
+            })
+            )
+
+        </form>
+    </div>
+</div>
+
+<script>
+    var form
+    function onFormInitialized(e) {
+        form = e.component;
+    }
+
+   
+    function ItemValueChanged(data) {
+        $("#ItemId").val(data.selectedItem.Value);
+    }
+    function ShopValueChanged(data) {
+        $("#ShopId").val(data.selectedItem.Value);
+    }
+
+    function onValueChanged(e) {
+
+        if (e.value === 1) {
+            //item
+            form.itemOption("Item", "visible", true);
+           
+            form.itemOption("Shop", "visible", false);
+           
+        }
+        if (e.value === 2) {
+            //shop
+
+            form.itemOption("Item", "visible", false);
+            form.itemOption("Shop", "visible", true);
+           
+        }
+
+       
+        
+
+
+    }
+
+
+</script>

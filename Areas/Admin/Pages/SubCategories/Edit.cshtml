@@ -1,0 +1,80 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.SubCategories.EditModel
+@{
+}
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-header d-flex justify-content-between align-items-center">
+                            @sharedResource["Edit"]  @sharedResource["SubCategory"]
+                            <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <br />
+                        <form id="form" method="post" enctype="multipart/form-data">
+                            @(Html.DevExtreme().Form<Dajeej.Models.SubCategory>()
+                                 .FormData(Model.subcategory)
+        .Items(items =>
+        {
+
+
+        items.AddSimpleFor(m => m.SubCategoryId).Visible(false);
+        items.AddSimpleFor(m => m.SubCategoryTLAR).Label(k => k.Text(sharedResource["TlAr"])).IsRequired(true);
+        items.AddSimpleFor(m => m.SubCategoryTLEN).Label(k => k.Text(sharedResource["TlEn"])).IsRequired(true);
+        items.AddSimpleFor(m => m.OrderIndex).Label(k => k.Text(sharedResource["Sort"])).IsRequired(true);
+        items.AddSimpleFor(m => m.IsActive).Label(k => k.Text(sharedResource["IsActive"]));
+        items.AddSimpleFor(m => m.CategoryId).IsRequired(true)
+    .Editor(e => e
+    .Lookup()
+
+    .DataSource(ds => ds.WebApi().Controller("SubCategories").LoadAction("CategoryLookup").Key("Value"))
+    .ValueExpr("Value")
+    .DisplayExpr("Text")
+    .Placeholder(sharedResource["Select Category"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+    ).Label(k => k.Text(sharedResource["Category"]));
+
+        items.AddSimple().Label(k => k.Text(sharedResource["Picture"])).Template(@<text>
+                        <div>
+                    <img width="250" height="250" src="/Images/SubCategories/@Model.subcategory.SubCategoryPic" alt="Category Picture"/>
+                </div>
+                            </text> );
+
+            items.AddSimpleFor(m => m.SubCategoryPic).Label(k => k.Text(sharedResource["Change_Picture"])).Template(@<text>
+
+
+                            @(Html.DevExtreme().FileUploader()
+                                        .Name("Photo")
+                                        .SelectButtonText(sharedResource["Change_Picture"])
+                                        .LabelText("")
+                                        .Accept("image/*")
+                                        .UploadMode(FileUploadMode.UseForm)
+                                         .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+                            .Height(70)
+                                                        )
+
+                            </text> );
+
+             
+
+                            items.AddButton()
+                                    .ColSpan(3)
+                                    .ButtonOptions(b => b.Text(sharedResource["Save"])
+                                    .Type(ButtonType.Success)
+                                    .UseSubmitBehavior(true)).CssClass("invers");
+                        })
+)
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

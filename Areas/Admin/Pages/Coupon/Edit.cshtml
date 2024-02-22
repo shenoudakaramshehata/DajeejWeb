@@ -1,0 +1,57 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Coupon.EditModel
+@{
+}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Coupon"]  </h3>
+        <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+        <div class="text text-danger">@Html.ValidationMessage("CouponType")</div>
+        <div class="text text-danger">@Html.ValidationMessage("DateError")</div>
+
+
+        <br />
+        <form id="form" method="post" enctype="multipart/form-data">
+            @(Html.DevExtreme().Form<Dajeej.Models.Coupon>
+    ()
+                                     .FormData(Model.coupon)
+
+    .Items(items =>
+    {
+        items.AddSimpleFor(m => m.CouponId).Visible(false);
+
+        items.AddSimpleFor(m => m.Serial).IsRequired(true).Label(k => k.Text(sharedResource["Serial"]));
+        items.AddSimpleFor(m => m.ExpirationDate).IsRequired(true).Label(k => k.Text(sharedResource["ExpirationDate"]));
+        items.AddSimpleFor(m => m.IssueDate).IsRequired(true).Label(k => k.Text(sharedResource["IssueDate"]));
+        items.AddSimpleFor(m => m.Amount).IsRequired(true).Label(k => k.Text(sharedResource["Amount"]));
+
+        items.AddSimpleFor(m => m.CouponTypeId).IsRequired(true)
+           .Editor(e => e
+           .Lookup()
+
+           .DataSource(ds => ds.WebApi().Controller("Coupons").LoadAction("CouponTypeLookup").Key("Value"))
+           .ValueExpr("Value")
+           .DisplayExpr("Text").RtlEnabled(true)
+           .Placeholder(sharedResource["Select Coupon Type"])
+                                                               .ShowClearButton(true)
+                                                               .ClearButtonText(sharedResource["Clear"])
+                                                               .CancelButtonText(sharedResource["Cancel"])
+                                                               .SearchPlaceholder(sharedResource["searching"])
+           ).Label(k => k.Text(sharedResource["Type"]));
+
+
+        items.AddButton()
+    .ColSpan(3)
+    .HorizontalAlignment(HorizontalAlignment.Right)
+    .ButtonOptions(b => b.Text(sharedResource["Save"])
+    .Type(ButtonType.Success)
+    .UseSubmitBehavior(true)).CssClass("invers");
+    })
+    )
+        </form>
+    </div>
+</div>
+            

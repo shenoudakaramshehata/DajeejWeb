@@ -1,0 +1,77 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.PublicNotifications.SendModel
+@{
+}
+
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header d-flex justify-content-between align-items-center">
+            @sharedResource["Details"]  
+            <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+        </h2>
+   
+   
+            <div class="form_inside" style="padding-top:20px;padding-left:20px;padding-right:20px">
+                <div class="card-body">
+
+
+                    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6 mt-4">
+                                <h4>@sharedResource["Informations"] </h4>
+                                <hr />
+
+                                <div class="d-flex justify-content-between">
+                                    <div> @sharedResource["Notification Title"] </div>
+                                    <div> @Model.publicNotification.Title   </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div> @sharedResource["Body"] </div>
+                                    <div> @Model.publicNotification.Body </div>
+                                </div>
+
+
+                                <div class="d-flex justify-content-between">
+                                    <div> @sharedResource["Type"] </div>
+                                    <div> @Model.publicNotification.EntityTypeNotify.TitleAr </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div>@sharedResource["NameAr"]  </div>
+                                    <div> @Model.publicNotification.EntityNameAr </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div>@sharedResource["NameEn"]  </div>
+                                    <div> @Model.publicNotification.EntityNameEn </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <div>@sharedResource["Country"]  </div>
+                                    <div> @Model.publicNotification.Country.CountryTLAR </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <form method="post">
+                    <br />
+                    <div class="invers">
+                        @(Html.DevExtreme().Button()
+                    .ID("button")
+                    .Text(sharedResource["Send"])
+                    .Type(ButtonType.Default)
+                    .UseSubmitBehavior(true)
+
+                    )
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        </div>

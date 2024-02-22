@@ -1,0 +1,162 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Plans.DeleteModel
+
+    @{
+        Layout = "~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+    }
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Plan"]  </h3>
+        <a asp-page="List" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+        @*        <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/Admin/plans/list">@sharedResource["Back"]</a>
+        *@
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+        <div class="row">
+            <h4> @sharedResource["Details"] </h4>
+            <hr />
+
+
+
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["Arabic Title"]  </dt>
+                    <dd class="col-sm-10"> @Model.plan.ArabicTitle </dd>
+                </dl>
+            </div>
+
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["English Title"]  </dt>
+                    <dd class="col-sm-10"> @Model.plan.EnglishTitle </dd>
+                </dl>
+            </div>
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["Price"]  </dt>
+                    <dd class="col-sm-10"> @Model.plan.Price </dd>
+                </dl>
+            </div>
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["Period"]  </dt>
+                    <dd class="col-sm-10"> @Model.plan.Period </dd>
+                </dl>
+            </div>
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["No Of Items"]  </dt>
+                    <dd class="col-sm-10"> @Model.plan.NoOfItems </dd>
+                </dl>
+            </div>
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["VipCollection"]  </dt>
+                    <dd class="col-sm-10">
+                        @{
+                            if (Model.plan.VipCollection == true)
+                            {
+                                <div>@sharedResource["VipCollection"] </div>
+                            }
+                            else
+                            {
+                                <div>@sharedResource["No VipCollection"] </div>
+                            }
+                        }
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["Reports"]  </dt>
+                    <dd class="col-sm-10">
+                        @{
+                            if (Model.plan.Reports == true)
+                            {
+                                <div>@sharedResource["Reports"] </div>
+                            }
+                            else
+                            {
+                                <div>@sharedResource["No Reports"] </div>
+                            }
+                        }
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["Dashboard"]  </dt>
+                    <dd class="col-sm-10">
+                        @{
+                            if (Model.plan.Dashboard == true)
+                            {
+                                <div>@sharedResource["Dashboard"] </div>
+                            }
+                            else
+                            {
+                                <div>@sharedResource["No Dashboard"] </div>
+                            }
+                        }
+                    </dd>
+                </dl>
+            </div>
+
+
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["AdzBanners"]  </dt>
+                    <dd class="col-sm-10">
+                        @{
+                            if (Model.plan.AdzBanners == true)
+                            {
+                                <div>@sharedResource["AdzBanners"] </div>
+                            }
+                            else
+                            {
+                                <div>@sharedResource["No AdzBanners"] </div>
+                            }
+                        }
+                    </dd>
+                </dl>
+            </div>
+
+        </div>
+        <div class="row">
+            @{
+                if (Model.plan.CountryId != 0)
+                {
+                    <div class="col-md-12 col-lg-6 mt-4">
+                        <h4> @sharedResource["Country"] </h4>
+                        <hr />
+
+                        <div class="d-flex justify-content-between">
+                            <div>@sharedResource["TlAr"]  </div>
+                            <div> @Model.plan.Country.CountryTLAR </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div>@sharedResource["TlEn"]  </div>
+                            <div> @Model.plan.Country.CountryTLEN </div>
+                        </div>
+                    </div>
+                }
+
+
+            }
+        </div>
+    </div>
+    <br />
+    <form method="post">
+        <div class="invers">
+            @(Html.DevExtreme().Button()
+                    .ID("button")
+                    .Text(sharedResource["Delete"])
+                    .Type(ButtonType.Danger)
+                    .UseSubmitBehavior(true)
+
+                    )
+        </div>
+
+    </form>
+</div>
+

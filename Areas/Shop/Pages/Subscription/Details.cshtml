@@ -1,0 +1,52 @@
+﻿@page
+@model Dajeej.Areas.Shop.Pages.Subscription.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Shop/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">   @sharedResource["Subscription Details"] </h3>
+                <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/Shop/subscription/SubscriptionsList">@sharedResource["Back"]</a>
+
+    </div>
+    <div class="form_inside" style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+
+<div>
+    <h4>@sharedResource["Details"]</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+                 @sharedResource["Plan"]  
+        </dt>
+        <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Subscriptions.Plan.EnglishTitle)
+        </dd>
+        <dt class="col-sm-2">
+                  @sharedResource["StartDate"]    
+        </dt>
+        <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Subscriptions.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+                   @sharedResource["EndDate"]   
+        </dt>
+        <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Subscriptions.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+                   @sharedResource["Active"]    
+        </dt>
+        <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Subscriptions.Active)
+        </dd>
+    </dl>
+</div>
+
+
+</div>
+</div>

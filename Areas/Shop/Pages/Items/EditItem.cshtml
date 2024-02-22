@@ -1,0 +1,331 @@
+﻿@page
+@model Dajeej.Areas.Shop.Pages.Items.EditItemModel
+@{
+}
+
+
+<div class="card w-100">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Edit"]  @sharedResource["Item"] </h3>
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+
+        <form id="form" class="item_form" method="post" enctype="multipart/form-data">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <div class="row">
+                <div class="col-md-12 col-lg-6 col_form" style="margin-bottom:25px">
+                    <h3> @sharedResource["Details"]  </h3>
+                    <hr />
+                    <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["NameEn"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.ItemImagesAndItemVm.ItemTitleEn)
+                          
+                            )
+                        </div>
+                    </div>
+
+                                      <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["NameAr"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.ItemImagesAndItemVm.ItemTitleAr)
+                           
+                            )
+                        </div>
+                    </div>
+
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["DescriptionEn"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.ItemImagesAndItemVm.ItemDescriptionEn)
+
+                            )
+                        </div>
+                    </div>
+
+                               <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["DescriptionAr"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.ItemImagesAndItemVm.ItemDescriptionAr)
+
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Price"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.ItemImagesAndItemVm.ItemPrice)
+
+                            )
+                        </div>
+                    </div>
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["IsActive"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().CheckBoxFor(s => s.ItemImagesAndItemVm.IsActive)
+                            )
+                        </div>
+                    </div>
+
+                                        <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["OutOfStock"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().CheckBoxFor(s => s.ItemImagesAndItemVm.OutOfStock)
+                            )
+                        </div>
+                    </div>
+
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Sort"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.ItemImagesAndItemVm.OrderIndex)
+
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field d-none">
+
+                        <div class="dx-field-label">@sharedResource["Sort"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.ItemImagesAndItemVm.ShopId)
+                            )
+                        </div>
+                    </div>
+
+
+                    <div class="dx-field d-none">
+
+                        <div class="dx-field-label">@sharedResource["Sort"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.ItemImagesAndItemVm.ItemId)
+                            )
+                        </div>
+                    </div>
+
+                   
+                     <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["Category"]:</div>
+
+                        <div class="dx-field-value">
+                               @(Html.DevExtreme().SelectBoxFor(s => s.ItemImagesAndItemVm.CategoryId)
+                .ValueExpr("Value")
+                            .DisplayExpr("Text").Placeholder(sharedResource["Select Category"]).RtlEnabled(true)
+                .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("CategoryLookup").Key("Value"))
+                .ShowClearButton(true)
+                
+                .OnValueChanged("onValueChanged"))
+
+                          
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["SubCategory"]:</div>
+
+                        <div class="dx-field-value">
+
+                              @(Html.DevExtreme().SelectBoxFor(s => s.ItemImagesAndItemVm.SubCategoryId).ID("citySelectBox")
+                 .DataSource(ds => ds.WebApi().Controller("Items").LoadAction("SubCategoryLookup").Key("SubCategoryId"))
+                            .ValueExpr("SubCategoryId")
+                            .OnInitialized("CompInit")
+                            .DisplayExpr("SubCategoryTLAR").Placeholder(sharedResource["Select SubCategory"]).RtlEnabled(true)
+                            )
+
+                           
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-lg-6 col_form">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                            <h3>@sharedResource["Change_Picture"] </h3>
+                            <hr />
+                            <div id="fileuploader">
+                                <div class="widget-container">
+                                    @(Html.DevExtreme().FileUploader()
+                                    .ID("Main-uploader")
+                                    .Name("MainImage")
+                                    .Multiple(false)
+                                    .Accept("image/*")
+                                    .UploadMode(FileUploadMode.UseForm)
+                                    .UploadUrl(Url.Action("Upload", "FileUploader"))
+                                    .OnValueChanged("fileUploader_valueChanged")
+                                    .SelectButtonText(sharedResource["Select_photo"])
+                                    )
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 col-lg-6 col_form">
+                            <h3>@sharedResource["AddMoreImages"]  </h3>
+                            <hr />
+                            <div id="fileuploader">
+                                <div class="widget-container">
+                                    @(Html.DevExtreme().FileUploader()
+                                    .ID("file-uploader")
+                                    .Name("myFile")
+                                    .Accept("image/*")
+                                    .UploadMode(FileUploadMode.UseForm)
+                                    .Multiple(true)
+                                    .UploadUrl(Url.Action("Upload", "FileUploader"))
+                                    .OnValueChanged("fileUploader_valueChanged")
+                                    .SelectButtonText(sharedResource["Select_photo"])
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:25px" id="images_container">
+                <div class="col-12">
+                    <h3> @sharedResource["Item_Images"] </h3>
+                    <hr />
+                    <div id="item_images" class="d-flex justify-content-center align-items-center" style="flex-wrap:wrap">
+                        <div class="loader">Loading...</div>
+                        <div class="message d-none">@sharedResource["No_Images"]  </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="button" style="margin-top:10px; margin-bottom:20px">
+
+                @(Html.DevExtreme().Button()
+                .ID("button")
+                .Text(sharedResource["Save"])
+                .Type(ButtonType.Success)
+                .UseSubmitBehavior(true)
+                )
+            </div>
+
+
+        </form>
+
+
+
+    </div>
+</div>
+
+<script>
+      window.addEventListener('load', (event) => {
+        console.log('page is fully loaded');
+        console.log(event);
+        fetch('http://' + location.host + '/Api/ProductImages/GetImagesForItem?id=' + window.location.search.split("=")[1])
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                var item_images = document.getElementById("item_images");
+                                    document.getElementsByClassName("loader")[0].remove();
+
+
+                for (const property in data) {
+                    console.log(data[property]);
+                    var img = document.createElement("img");
+                    img.src = "/images/Item/" + data[property].ImageName;
+                    img.width = 150;
+                    img.classList.add("m-3");
+                    var div = document.createElement("div");
+                    div.classList.add("position-relative");
+                    div.classList.add(data[property].ItemImageId);
+                    div.appendChild(img);
+                    var x = document.createElement("div");
+                    x.style.right = 0;
+                    x.style.top = 0;
+                    x.style.cursor  = "pointer";
+                    x.addEventListener("click", (e) => removePic(e))
+                    
+                    x.classList.add("fas");
+                    x.classList.add("fa-times");
+                    x.classList.add("position-absolute")
+                   // x.innerHTML = "x";
+
+                    x.id = data[property].ItemImageId;
+                    div.appendChild(x);
+
+                    item_images.appendChild(div);
+
+                }
+
+                if(data.length <= 0 ){
+                    document.getElementsByClassName("message")[0].classList.remove("d-none");
+                }
+
+             });
+
+      });
+
+
+      function removePic(e) {
+        console.log("remove pic")
+        console.log(e);
+        console.log(e.target.id);
+
+            fetch('http://' + location.host + `/Api/ProductImages/RemoveImageById?id=${e.target.id}`, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("remove from dom");
+            console.log(data);
+            var myobj = document.getElementsByClassName(data)[0];
+            myobj.remove();
+
+        }).catch(err => {
+            console.log("rror")
+        })
+    }
+
+    function getFileUploaderInstance() {
+        return $("#file-uploader").dxFileUploader("instance");
+    }
+
+    function fileUploader_valueChanged(e) {
+        var files = e.value;
+    }
+
+    function acceptOption_changed(e) {
+        getFileUploaderInstance().option("accept", e.value);
+    }
+
+    function uploadMode_changed(e) {
+        getFileUploaderInstance().option("uploadMode", e.value);
+    }
+
+    function multipleOption_changed(e) {
+        getFileUploaderInstance().option("multiple", e.value);
+    }
+
+
+    
+    var Drop;
+
+    function CompInit(e) {
+        Drop = e.component;
+       console.log(Drop)
+    }
+
+
+      function onValueChanged(e) {
+                
+
+        let dataSource = Drop.getDataSource();
+        dataSource.filter("CategoryId", "=", e.value);
+        dataSource.load();
+        Drop.option("value", null);
+    }
+
+</script>

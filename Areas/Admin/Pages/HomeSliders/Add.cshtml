@@ -1,0 +1,80 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.HomeSliders.AddModel
+@{
+}
+
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac"> @sharedResource["Add"]  @sharedResource["HomeSlider"] </h3>
+        <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+    </div>
+    <div class="form_inside" style="padding-top:20px;padding-left:20px;padding-right:20px ">
+
+        <form id="form" method="post" enctype="multipart/form-data">
+            
+            @(Html.DevExtreme().Form<Dajeej.Models.Slider>()
+
+            .ID("HomeSliderForm")
+           
+
+            .Items(items => {
+
+
+        
+
+            
+
+
+       
+
+
+         
+
+
+            
+            items.AddSimpleFor(s => s.CountryId)
+            .Editor(e => e
+            .Lookup()
+            .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("CountryLookup").Key("Value"))
+            .DisplayExpr("Text")
+            .ValueExpr("Value")
+             .Placeholder(sharedResource["Select"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+
+            ).Label(k => k.Text(sharedResource["Country"])).Visible(true).Name("CountryId").IsRequired(true);
+
+            items.AddSimpleFor(m => m.OrderIndex).Label(k => k.Text(sharedResource["Sort"])).IsRequired(true).Editor(e => e.NumberBox().Value(null).Min(0));
+            items.AddSimpleFor(m => m.IsActive).Label(k => k.Text(sharedResource["IsActive"]));
+
+            items.AddSimpleFor(m => m.Pic).IsRequired(true).Label(k => k.Text(sharedResource["Picture"])).Template(@<text>
+                    @(Html.DevExtreme().FileUploader()
+                .Name("Photo")
+                .SelectButtonText(sharedResource["Select_photo"])
+                .LabelText("")
+                .Accept("image/*")
+                .UploadMode(FileUploadMode.UseForm)
+                .Height(70)
+                    )
+
+                </text> ).IsRequired(true); 
+            items.AddButton()
+            .ColSpan(3)
+            .HorizontalAlignment(HorizontalAlignment.Left)
+            .ButtonOptions(b => b.Text(sharedResource["Save"])
+            .Type(ButtonType.Success)
+            .UseSubmitBehavior(true)).CssClass("invers");
+
+
+
+            })
+            )
+
+        </form>
+    </div>
+</div>
+

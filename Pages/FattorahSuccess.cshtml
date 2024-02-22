@@ -1,0 +1,101 @@
+﻿@page
+@model Dajeej.Pages.FattorahSuccessModel
+@{
+    ViewData["Title"] = "Pay";
+    Layout = null;
+}
+
+    <title> Dajeej Pay</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+     <link rel="shortcut icon" href="/admin/images/DajeejLogo.png">
+    <script src="https://kit.fontawesome.com/fb2a8bbabd.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            text-align: center;
+            padding: 40px 0;
+            background: #EBF0F5;
+        }
+     
+
+        h1 {
+            
+            font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+            font-weight: 900;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+   
+
+        p {
+            color: #404F5E;
+            font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+            font-size: 20px;
+            margin: 0;
+        }
+        
+       
+
+        .m {
+            font-size: 100px;
+            line-height: 200px;
+            margin-left: -15px;
+        }
+
+        .card {
+            background: white;
+            padding: 60px;
+            border-radius: 4px;
+            box-shadow: 0 2px 3px #C8D0D8;
+            display: inline-block;
+            margin: 0 auto;
+        }
+         .pb-3 {
+             padding-top:12rem;
+         }
+       
+
+
+  
+
+       
+    </style>
+
+    <div class="card">
+        @{
+            if(@Model.fattorahPaymentResult!=null){
+
+            
+            if(@Model.fattorahPaymentResult.InvoiceStatus == "Paid")
+            {
+              <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+            <i id="" style="color: #9ABC66;" class="checkmark m">✓</i>
+            </div>
+            //<h1 style="color: #88B04B;">@sharedResource["Operation Successed"]</h1>
+            <h1 style="color: #88B04B;">عملية الدفع تمت بنجاح</h1>
+                <p>شكراً لإشتراكك معنا فى تطبيق ضجيج</p>
+                //<p>@sharedResource["Thank you for Your Subscribtion"]</p>
+            }
+            else
+           {
+                <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;text-align:center">
+                <i class="fas fa-times m" style="color: red;"></i>
+                </div>
+        //        <h1>@sharedResource["Operation Failed"]</h1>
+        //   <p>
+        //    @sharedResource["Oops! Something went wrong ;"]
+        //    <br />
+        //    @sharedResource["While trying to reserve money from your account!"]
+        //</p>
+             <h1>لقد فشلت عملية الدفع</h1>
+           <p>
+            هناك خطأ ما حدث 
+            <br />
+            أثناء محاولة سحب الأموال من حسابك
+        </p>
+         } 
+            }
+
+        }
+       
+    </div>
+

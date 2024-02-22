@@ -1,0 +1,135 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.PublicNotifications.AddModel
+@{
+}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-header d-flex justify-content-between align-items-center">
+            @sharedResource["Add"]  @sharedResource["PublicNotification"]
+            <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+        </h2>
+    </div>
+    <div class="form_inside" style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+        <div class="text-danger DeleteValidation ">@Html.ValidationMessage("Validation") </div>
+
+        <form id="form" method="post" enctype="multipart/form-data">
+            @Html.Hidden("EntityId", "")
+            @(Html.DevExtreme().Form<Dajeej.Models.PublicNotification>()
+
+    .ID("PublicNotificationForm")
+     .OnInitialized("onFormInitialized")
+.Items(items => {
+    items.AddSimpleFor(m => m.CountryId).IsRequired(true).Label(k => k.Text(sharedResource["Country"]))
+               .Editor(e => e
+                   .Lookup()
+                   .DataSource(ds => ds.WebApi().Controller("PublicNotifications").LoadAction("CountryLookup").Key("Value"))
+                   .ValueExpr("Value")
+                   .DisplayExpr("Text")
+                    .Placeholder(sharedResource["Select Country"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+                    .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+               );
+    items.AddSimpleFor(m => m.Title).IsRequired(true).Label(k => k.Text(sharedResource["Notification Title"]));
+    items.AddSimpleFor(m => m.Body).IsRequired(true).Label(k => k.Text(sharedResource["Body"])).Editor(c => c.TextArea().Height(150));
+
+    items.AddSimpleFor(m => m.EntityTypeNotifyId).IsRequired(true).Label(k => k.Text(sharedResource["Type"]))
+        .Editor(e => e
+            .Lookup()
+            .DataSource(ds => ds.WebApi().Controller("PublicNotifications").LoadAction("SliderTypeLookup").Key("Value"))
+            .ValueExpr("Value")
+            .DisplayExpr("Text")
+             .Placeholder(sharedResource["Select Type"])
+                                                        .ShowClearButton(true)
+                                                        .ClearButtonText(sharedResource["Clear"])
+                                                        .CancelButtonText(sharedResource["Cancel"])
+                                                        .SearchPlaceholder(sharedResource["searching"])
+             .OnValueChanged("onValueChanged")
+                 .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+             );
+    items.AddSimple()
+            .Editor(e => e
+                .Lookup()
+                 .DataSource(ds => ds.WebApi().Controller("PublicNotifications").LoadAction("ItemLookup").Key("Value"))
+          .DisplayExpr("Text")
+           .Placeholder(sharedResource["Select"])
+            .ValueExpr("Value")
+      .OnSelectionChanged("ItemValueChanged")
+                     .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+                 ).Label(k => k.Text(sharedResource["Item"])).Name("Item").Visible(false).IsRequired(true);
+    items.AddSimple()
+            .Editor(e => e
+                .Lookup()
+                 .DataSource(ds => ds.WebApi().Controller("PublicNotifications").LoadAction("ShopLookup").Key("Value"))
+          .DisplayExpr("Text")
+          .Placeholder(sharedResource["Select"])
+            .ValueExpr("Value")
+      .OnSelectionChanged("ShopValueChanged")
+                     .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+                 ).Label(k => k.Text(sharedResource["Shop"])).Name("Shop").Visible(false).IsRequired(true);
+    
+    items.AddButton()
+  .ColSpan(3)
+  .HorizontalAlignment(HorizontalAlignment.Right)
+  .ButtonOptions(b => b.Text(sharedResource["Save"])
+  .Type(ButtonType.Success)
+  .UseSubmitBehavior(true)).CssClass("invers");
+})
+                            )
+        </form>
+    </div>
+</div>
+<script>
+
+    var form
+    function onFormInitialized(e) {
+        form = e.component;
+    }
+
+
+    function ItemValueChanged(data) {
+        $("#EntityId").val(data.selectedItem.Value);
+    }
+
+    function ShopValueChanged(data) {
+        $("#EntityId").val(data.selectedItem.Value);
+    }
+
+    function ChampionsValueChanged(data) {
+        $("#EntityId").val(data.selectedItem.Value);
+    }
+
+    function TrainerValueChanged(data) {
+        $("#EntityId").val(data.selectedItem.Value);
+    }
+
+    function onValueChanged(e) {
+
+        if (e.value === 1) {
+
+            form.itemOption("Item", "visible", true);
+            form.itemOption("Shop", "visible", false);
+           
+
+        }
+
+        if (e.value === 2) {
+            form.itemOption("Item", "visible", false);
+            form.itemOption("Shop", "visible", true);
+            
+
+        }
+
+
+
+
+    }
+
+
+</script>

@@ -1,0 +1,89 @@
+﻿@page
+@using Dajeej.Models
+@using Dajeej.Data
+@using Microsoft.AspNetCore.Identity
+@model Dajeej.Areas.Shop.Pages.Subscription.SubscriptionsListModel
+@{
+}
+
+@inject UserManager<ApplicationUser> _userManager
+
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac"> @sharedResource["Subscriptions List"] </h3>
+@*        <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/shop/items/additems">@sharedResource["Add"]  @sharedResource["Item"]</a>
+*@    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+        @(Html.DevExtreme().DataGrid<Dajeej.Models.Subscription>()
+        .DataSource(ds => ds.Mvc()
+        .Controller("Subscriptions")
+        .LoadAction("GetByShopId")
+        .Key("SubscriptionId")
+        .LoadParams(new { id = new JS(Convert.ToString(_userManager.FindByNameAsync(User.Identity.Name).Result.EntityId))})
+        )
+        .RemoteOperations(true)
+        .Columns(columns => {
+
+
+        columns.AddFor(m => m.PlanId).Lookup(lookup => lookup
+        .DataSource(ds => ds.WebApi().Controller("Subscriptions").LoadAction("PlansLookup").Key("Value"))
+        .ValueExpr("Value")
+        .DisplayExpr("Text")
+        ).Caption(sharedResource["Plan"]);
+
+
+        columns.AddFor(m => m.StartDate).Caption(sharedResource["StartDate"]);
+
+        columns.AddFor(m => m.EndDate).Caption(sharedResource["EndDate"]);
+
+        columns.AddFor(m => m.Active).Caption(sharedResource["Active"]);
+
+
+        
+
+        columns.Add().Caption(sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                <a href="/Shop/subscription/Details?id=<%- data.SubscriptionId %>">@sharedResource["Details"] </a>
+            </text>);
+
+
+        }).Editing(e => e.Mode(GridEditMode.Popup)
+        .AllowAdding(false)
+        .AllowUpdating(false)
+        .AllowDeleting(false)
+        .Popup(p => p
+        .Title("Plan Info")
+        .ShowTitle(true)
+        .Width(600)
+        .Height(400)
+        )
+        )
+        .Paging(paging => paging.PageSize(10))
+        .Pager(pager =>
+        {
+        pager.Visible(true);
+        pager.DisplayMode(GridPagerDisplayMode.Full);
+        pager.ShowPageSizeSelector(true);
+        pager.AllowedPageSizes(new JS("[5, 10, 'all']"));
+        pager.ShowInfo(true);
+        pager.ShowNavigationButtons(true);
+        })
+        .ShowBorders(true)
+        .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto)
+        )
+        .SearchPanel(searchPanel => searchPanel
+        .Visible(true)
+        .Width(240)
+        .Placeholder(sharedResource["SearchTxt"])
+        )
+        .HeaderFilter(headerFilter => headerFilter.Visible(true)).ShowColumnLines(true)
+        .ShowRowLines(true)
+        .RowAlternationEnabled(true)
+        .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+        )
+
+    </div>
+</div>

@@ -1,0 +1,90 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Subscriptions.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-header d-flex justify-content-between align-items-center">
+                            @sharedResource["Details"]
+                            <a asp-area="Admin" asp-page="/subscriptions/list" class="btn btn-primary"> @sharedResource["Back"]</a>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+
+                        <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+                            <div class="row">
+                                <h4> @sharedResource["Details"] </h4>
+                                <hr />
+
+                                <div class="col-md-12 col-lg-12 mt-4">
+                                    <dl class="row">
+                                        <dt class="col-sm-2">@sharedResource["Shop"]  </dt>
+                                        <dd class="col-sm-10">
+                                            @Model.Subscriptions.Shop.ShopTLAR
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                                <div class="col-md-12 col-lg-12 mt-4">
+                                    <dl class="row">
+                                        <dt class="col-sm-2">@sharedResource["Plan"]  </dt>
+                                        <dd class="col-sm-10">
+                                            @Model.Subscriptions.Plan.EnglishTitle
+                                        </dd>
+                                    </dl>
+                                </div>
+
+
+                                <div class="col-md-12 col-lg-12 mt-4">
+                                    <dl class="row">
+                                        <dt class="col-sm-2">@sharedResource["IsActive"]  </dt>
+                                        <dd class="col-sm-10">
+                                            @{
+                                                if (Model.Subscriptions.Active == true)
+                                                {
+                                                    <div>@sharedResource["Active"] </div>
+                                                }
+                                                else
+                                                {
+                                                    <div>@sharedResource["Not Active"] </div>
+                                                }
+                                            }
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-12 col-lg-12 mt-4">
+                                    <dl class="row">
+                                        <dt class="col-sm-2">@sharedResource["StartDate"]  </dt>
+                                        <dd class="col-sm-10">
+                                            @Model.Subscriptions.StartDate
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="col-md-12 col-lg-12 mt-4">
+                                    <dl class="row">
+                                        <dt class="col-sm-2">@sharedResource["EndDate"]  </dt>
+                                        <dd class="col-sm-10">
+                                            @Model.Subscriptions.EndDate
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

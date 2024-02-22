@@ -1,0 +1,96 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.SystemConfigration.FAQListModel
+@{
+}
+<style>
+    td {
+        text-align: center !important;
+    }
+</style>
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-header d-flex justify-content-between align-items-center">
+                            @sharedResource["FAQList"]
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        @(Html.DevExtreme().DataGrid<Dajeej.Models.FAQ>()
+    .DataSource(ds => ds.Mvc()
+        .Controller("FAQs")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("FAQId")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+
+
+        columns.AddFor(m => m.QuestionAr).Caption(sharedResource["QuestionAr"]);
+
+        columns.AddFor(m => m.AnswerAr).Caption(sharedResource["AnswerAr"]);
+        columns.AddFor(m => m.QuestionEn).Caption(sharedResource["QuestionEn"]);
+
+        columns.AddFor(m => m.AnswerEn).Caption(sharedResource["AnswerEn"]);
+    })
+.Editing(e => e.Mode(GridEditMode.Popup)
+
+.Texts(c => c.CancelRowChanges(sharedResource["Cancel"]).SaveRowChanges(sharedResource["Save"]).EditRow(sharedResource["Edit"]).AddRow(sharedResource["Add"]).ConfirmDeleteMessage(sharedResource["Are you sure to delete this record ?"]))
+                        .UseIcons(true)
+    .AllowUpdating(true)
+    .AllowAdding(true)
+    .AllowDeleting(true)
+    .Popup(p => p
+    .Title(sharedResource["FAQ"])
+    .ShowTitle(true)
+    .MaxWidth(750)
+    .Height(250)).Form(f => f.Items(items =>
+    {
+        items.AddGroup()
+            .ColCount(2)
+            .ColSpan(2)
+            .Items(groupItems =>
+            {
+                groupItems.AddSimple().DataField("QuestionAr");
+                groupItems.AddSimple().DataField("AnswerAr");
+                 groupItems.AddSimple().DataField("QuestionEn");
+                groupItems.AddSimple().DataField("AnswerEn");
+
+
+            });
+
+    }))
+    )
+
+    .ShowBorders(true)
+    .FilterRow(filterRow => filterRow
+    .Visible(true)
+    .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+    .Visible(true)
+    .Width(240)
+         .Placeholder(sharedResource["SearchTxt"])
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .ShowRowLines(true).ShowColumnLines(true)
+    .RowAlternationEnabled(true)
+      .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+
+    )
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

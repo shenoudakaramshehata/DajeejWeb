@@ -1,0 +1,100 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.SystemConfigration.PagesContentModel
+@{
+}
+
+<style>
+    td {
+        text-align: center !important;
+    }
+</style>
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-header d-flex justify-content-between align-items-center">
+                            @sharedResource["PagesContent"]
+                            
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        @(Html.DevExtreme().DataGrid<Dajeej.Models.PageContent>()
+    .DataSource(ds => ds.Mvc()
+        .Controller("PageContents")
+        .LoadAction("Get")
+        .InsertAction("Post")
+        .UpdateAction("Put")
+        .DeleteAction("Delete")
+        .Key("PageContentId")
+    )
+    .RemoteOperations(true)
+    .Columns(columns => {
+
+
+
+    columns.AddFor(m => m.PageTitleAr).Caption(sharedResource["TlAr"]);
+    columns.AddFor(m => m.PageTitleEn).Caption(sharedResource["TlEn"]);
+
+    columns.AddFor(m => m.ContentAr).Caption(sharedResource["ContentAr"]);
+
+    columns.AddFor(m => m.ContentEn).Caption(sharedResource["ContentEn"]);
+
+    columns.Add().Caption(sharedResource["Actions"]).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                                <a class="btn btn-success btn-sm"  href="/Admin/SystemConfigration/EditPageContent?id=<%- data.PageContentId %>">  <i class="fas fa-edit"></i> </a>
+                            </div>
+            </text>);
+
+    })
+ .Editing(e => e.Mode(GridEditMode.Popup)
+    .AllowUpdating(false)
+    .AllowAdding(false)
+    .AllowDeleting(false)
+    .Popup(p => p
+    .Title("Add New PageContent")
+    .ShowTitle(true)
+    .MaxWidth(750)
+    .Height(240)).Form(f => f.Items(items =>
+    {
+        items.AddGroup()
+            .ColCount(2)
+            .ColSpan(2)
+            .Items(groupItems =>
+            {
+                groupItems.AddSimple().DataField("PageTitle");
+                groupItems.AddSimple().DataField("Content");
+
+
+            });
+
+    }))
+    )
+
+    .ShowBorders(true)
+    .FilterRow(filterRow => filterRow
+    .Visible(true)
+    .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+    .Visible(true)
+    .Width(240)
+
+    .Placeholder(sharedResource["SearchTxt"])
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .ShowRowLines(true).ShowColumnLines(true)
+    .RowAlternationEnabled(true)
+     .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+    )
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

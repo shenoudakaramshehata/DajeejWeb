@@ -1,0 +1,70 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.SystemConfigration.FeedBackDetailsModel
+@{
+}
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title"> @sharedResource["Customers Messages"]  </h2>
+                        <div class="col-md-12 invers">
+                            <a asp-page="UsersFeedBacks" class="btn btn-primary"> @sharedResource["Back"]</a>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-6 mt-4">
+                                    <h4> @sharedResource["Details"] </h4>
+                                    <hr />
+                                    </div>
+                                    <div class="col-md-12 col-lg-12 mt-4">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">@sharedResource["Full Name"]  </dt>
+                                            <dd class="col-sm-8"> @Model.Msg.FullName</dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 mt-4">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">@sharedResource["Mobile"] </dt>
+                                            <dd class="col-sm-8"> @Model.Msg.Mobile</dd>
+                                        </dl>
+                                    </div>
+
+
+                                    <div class="col-md-12 col-lg-12 mt-4">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">@sharedResource["Email"]  </dt>
+                                            <dd class="col-sm-8"> @Model.Msg.Email</dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 mt-4">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">@sharedResource["Message Date"]  </dt>
+                                            <dd class="col-sm-8"> @Model.Msg.TransDate</dd>
+                                        </dl>
+                                    </div>
+
+                                    <div class="col-md-12 col-lg-12 mt-4">
+                                        <dl class="row">
+                                            <dt class="col-sm-4">@sharedResource["Message"]  </dt>
+                                            <dd class="col-sm-8"> @Model.Msg.Msg</dd>
+                                        </dl>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

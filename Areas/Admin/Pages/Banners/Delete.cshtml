@@ -1,0 +1,65 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Banners.DeleteModel
+@{
+}
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Banner"]  </h3>
+        <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+        @*        <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/Admin/plans/list">@sharedResource["Back"]</a>
+        *@
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+        <div class="row">
+            <div class="col-md-12 col-lg-6 mt-4">
+                <h4>@sharedResource["Informations"] </h4>
+                <hr />
+
+
+
+                        <div class="d-flex justify-content-between">
+                            <div> @sharedResource["Arabic Type Title"] </div>
+                            <div> @Model.banner.EntityTypeNotify.TitleAr </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <div> @sharedResource["English Type Title"] </div>
+                            <div> @Model.banner.EntityTypeNotify.TitleEn </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div>@sharedResource["NameAr"]  </div>
+                            <div> @Model.EntityNameAr </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <div>@sharedResource["NameEn"]  </div>
+                            <div> @Model.EntityNameEn </div>
+                        </div>
+                
+                <div class="d-flex justify-content-between">
+                    <div>@sharedResource["Picture"]  </div>
+                    <div class="Details_img">
+                        <img style="border-radius: 13%;" width="250" height="250" class="img-fluid" src="~/Images/Banner/@Model.banner.Pic" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form method="post">
+        <div class="invers">
+            @(Html.DevExtreme().Button()
+                    .ID("button")
+                    .Text(sharedResource["Delete"])
+                    .Type(ButtonType.Danger)
+                    .UseSubmitBehavior(true)
+
+                    )
+        </div>
+
+    </form>
+</div>
+                   
+               
+

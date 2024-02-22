@@ -1,0 +1,83 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Banners.IndexModel
+@{
+    ViewData["active"] = "active";
+
+}
+
+<style>
+    td {
+        text-align: center !important;
+    }
+</style>
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Banners"]  </h3>
+        <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/Admin/Banners/Add">@sharedResource["Add"]  @sharedResource["Banner"]</a>
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+        @(Html.DevExtreme().DataGrid<Dajeej.Models.Banner>()
+                        .ID("gridContainer")
+
+                        .DataSource(Model.BannerLst)
+
+                        .Columns(columns => {
+         columns.AddFor(m => m.Pic)
+            .Width(100)
+            .AllowFiltering(false)
+            .AllowSorting(false)
+            .CellTemplate(@<text>
+                <div>
+                    <img width="50" height="50" src="/Images/Banner/<%- value %>" alt="image"/>
+                </div>
+            </text>).Caption(sharedResource["Picture"]);
+                        columns.AddFor(m => m.EntityTypeNotifyId).Lookup(lookup => lookup
+                .DataSource(ds => ds.WebApi().Controller("PublicNotifications").LoadAction("SliderTypeLookup").Key("Value"))
+                .ValueExpr("Value")
+                .DisplayExpr("Text")
+                   ).Caption(sharedResource["Type"]);
+
+
+                        columns.AddFor(m => m.EntityId).Caption(sharedResource["Name"]);
+                        columns.AddFor(m => m.OrderIndex).Caption(sharedResource["Sort"]);
+                        columns.AddFor(m => m.IsActive).Caption(sharedResource["IsActive"]);
+                        columns.AddFor(m => m.Country.CountryTLAR).Caption(sharedResource["Country"]);
+
+
+                        columns.Add().Caption(sharedResource["Actions"]).Width(200).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                                <a class="btn btn-primary btn-sm" href="/Admin/Banners/Details?id=<%- data.BannerId %>"> <i class="fas fa-eye"></i>  </a>
+                                <a class="btn btn-success btn-sm mx-2" href="/Admin/Banners/Edit?id=<%- data.BannerId %>">  <i class="fas fa-edit"> </i></a>
+                                <a class="btn btn-danger btn-sm" href="/Admin/Banners/Delete?id=<%- data.BannerId %>">  <i class="fas fa-trash"></i> </a>
+                            </text>).Width(400);
+
+                        })
+                          .Paging(paging => paging.PageSize(10))
+                        .Pager(pager =>
+                        {
+                            pager.Visible(true);
+                            pager.DisplayMode(GridPagerDisplayMode.Full);
+                            pager.ShowPageSizeSelector(true);
+                            pager.AllowedPageSizes(new JS("[5, 10, 'all']"));
+                            pager.ShowInfo(true);
+                            pager.ShowNavigationButtons(true);
+
+                        })
+                        .HeaderFilter(headerFilter => headerFilter.Visible(true)).ShowColumnLines(true)
+                        .ShowRowLines(true)
+                        .RowAlternationEnabled(true)
+                        .AllowColumnReordering(true)
+                        .ShowRowLines(true)
+                        .ShowBorders(true)
+                        .SearchPanel(searchPanel => searchPanel
+                        .Visible(true)
+                        .Width(240)
+                        .Placeholder(sharedResource["SearchTxt"]))
+                        .RemoteOperations(true)
+    .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+                                        )
+
+    </div>
+    </div>
+             

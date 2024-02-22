@@ -1,0 +1,577 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Shop.EditShopModel
+@{
+}
+@inject Dajeej.Data.DajeejContext _context
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+<script>
+    const process = { env: {} };
+    process.env.GOOGLE_MAPS_API_KEY =
+      "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg";
+</script>
+<style>
+    #map {
+        height: 100%;
+    }
+
+    input[type="file"] {
+        font-size: 15px;
+    }
+
+    inputfile + label * {
+        pointer-events: none;
+    }
+
+    label {
+        font-size: 13px;
+    }
+
+    input[type="url"] {
+        font-size: 15px;
+    }
+
+    .custom-file-label {
+        /*width: 43rem;*/
+        margin: auto;
+    }
+</style>
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-header d-flex justify-content-between align-items-center">
+                            @sharedResource["Edit"]  @sharedResource["Shop"]
+                            <a asp-area="admin" asp-page="/Shop/Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <br />
+                        <form enctype="multipart/form-data" method="post" class="col-12 pt-6" onsubmit="return validateMyForm();">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                     <input class="form-control input rounded formInput" asp-for="shop.Banner" hidden />
+                     <input class="form-control input rounded formInput" asp-for="shop.Pic" hidden />
+                     <input class="form-control input rounded formInput" asp-for="shop.Email" hidden />
+
+
+
+                            <fieldset class="form-group border p-5">
+                                <legend><b class="text-primary legenedC">@sharedResource["Shop Info"]</b></legend>
+                                <div class="form-group row">
+
+                                    <div class="col-lg-6 col-md-6">
+
+                                        <label class="Labels" asp-for="shop.ShopTLEN">@sharedResource["Shop English Title"]  </label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.ShopTLEN" required />
+                                        <div>
+                                            <span asp-validation-for="shop.ShopTLEN" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+
+                                        <label class="Labels" asp-for="shop.ShopTLAR">@sharedResource["Shop Arabic Title"] </label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.ShopTLAR" required />
+                                        <span asp-validation-for="shop.ShopTLAR" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <label class="Labels" asp-for="shop.ShopNo"> @sharedResource["Shop Number"]</label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.ShopNo" required />
+                                        <span asp-validation-for="shop.ShopNo" class="text-danger"></span>
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 ">
+                                        <label class="Labels" asp-for="shop.Address"> @sharedResource["Address"] </label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.Address" required />
+                                        <span asp-validation-for="shop.Address" class="text-danger"></span>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-6 col-md-6 ">
+                                        <label class="Labels" asp-for="shop.DeliveryCost"> @sharedResource["Delivery Cost"] </label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.DeliveryCost" required />
+                                        <span asp-validation-for="shop.DeliveryCost" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <label class="Labels" asp-for="shop.OrderIndex"> @sharedResource["Sort"]</label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.OrderIndex" required />
+                                        <span asp-validation-for="shop.OrderIndex" class="text-danger"></span>
+
+                                    </div>
+
+
+
+                                </div>
+
+                               @* <div class="form-group row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <label class="Labels" asp-for="shop.Email"> @sharedResource["Email"]</label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.Email" type="email" required />
+                                        <span asp-validation-for="shop.Email" class="text-danger"></span>
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 ">
+                                        <label class="Labels" asp-for="shop.Password"> @sharedResource["Password"] </label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.Password" type="password" required />
+                                        <span asp-validation-for="shop.Password" class="text-danger"></span>
+                                    </div>
+
+
+
+                                </div>*@
+                                <div class="form-group row">
+                                    <div class="col-lg-6 col-md-6" id="CountryLId">
+                                        <label asp-for="shop.CountryId">@sharedResource["Country"]  </label>
+                                        @(Html.DevExtreme().SelectBoxFor(s=>s.shop.CountryId).Name("shop.CountryId")
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text").Placeholder(sharedResource["Select Country"]).RtlEnabled(true)
+                                        .ID("CountryLookupId").DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("ActiveCountryLookup").Key("Value"))
+                                        .ShowClearButton(true)
+
+                                        .OnValueChanged("onValueChanged"))
+
+                                        <span id="CountrySpan" style="display:none" class="text-danger">Country Is Required</span>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6" id="CityLId">
+                                        <label asp-for="shop.EntityTypeId">@sharedResource["Type"]  </label>
+                                        @(Html.DevExtreme().LookupFor(c=>c.shop.EntityTypeId)
+                                        .ID("CitiesLookupId")
+                                        .DataSource(d => d.WebApi()
+                                        .Controller("Shops")
+                                        .LoadAction("EntityTypesLookup")
+                                        .Key("Value")
+
+                                        )
+                                        .ValueExpr("Value")
+                                        .DisplayExpr("Text")
+
+                                        .Placeholder(sharedResource["Select Type"])
+                                        .ShowClearButton(true)
+                                        .ClearButtonText(sharedResource["Clear"])
+                                        .CancelButtonText(sharedResource["Cancel"])
+                                        .SearchPlaceholder(sharedResource["searching"]).RtlEnabled(true)
+                                        )
+                                        <span id="CitySpan" style="display:none" class="text-danger">Shop Type Is Required</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row">
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <label class="Labels" asp-for="shop.DescriptionTLEN">@sharedResource["Description In English"] </label>
+                                        <textarea class="form-control input rounded formInput" asp-for="shop.DescriptionTLEN" style="height:90px;"></textarea>
+                                        <span asp-validation-for="shop.DescriptionTLEN" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <label class="Labels" asp-for="shop.DescriptionTLAR">@sharedResource["Description In Arabic"] </label>
+                                        <textarea class="form-control input rounded formInput" asp-for="shop.DescriptionTLAR" style="height:90px;"></textarea>
+                                        <span asp-validation-for="shop.DescriptionTLAR" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group border p-5">
+                                <legend><b class="text-primary legenedC">@sharedResource["Shop Contacts"]</b></legend>
+
+                                <div class="form-group row">
+
+                                    <div class="col-lg-6 col-md-6">
+
+                                        <label class="Labels" asp-for="shop.Mobile">@sharedResource["Mobile"]  </label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.Mobile" type="text" required />
+                                        <span asp-validation-for="shop.Mobile" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6">
+                                        <label class="Labels" asp-for="shop.Tele">@sharedResource["Telephone"]  </label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.Tele" type="text" required />
+                                        <span asp-validation-for="shop.Tele" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <label class="Labels" asp-for="shop.Instgram">@sharedResource["Instgram"] </label>
+                                        <input class="form-control input rounded formInput" asp-for="shop.Instgram" type="url" />
+                                        <span asp-validation-for="shop.Instgram" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+
+                            </fieldset>
+                            <fieldset class="form-group border p-5">
+                                <legend><b class="text-primary legenedC">@sharedResource["Location"]</b></legend>
+                                <div class="form-group row">
+                                    <div id="map" style="height:600px;width:600px;margin:auto"></div>
+                                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfsM19EfsfREOaCkPjRAVMYdTIXToo0FE&callback=initMap&v=weekly" defer></script>
+
+                                </div>
+
+                                <input type="text" asp-for="shop.Lat" value="@Model.shop.Lat" hidden id="LatId" />
+                                <input type="text" asp-for="shop.Lng" value="@Model.shop.Lng" hidden id="LngId" />
+
+
+                            </fieldset>
+
+
+                            <fieldset class="form-group border p-5">
+                                <legend><b class="text-primary legenedC">@sharedResource["Shop Plan"]</b></legend>
+
+                                @*PlanLookupId*@
+                                <div class="form-group row">
+                                    <div class="col-lg-6 col-md-6" id="PlanLId">
+                                        <label asp-for="shop.PlanId">@sharedResource["Plan"]  </label>
+                                        @(Html.DevExtreme().SelectBoxFor(s=>s.shop.PlanId).Name("shop.PlanId").ID("PlanLookupId")
+                                        .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("ActivePlanLookup").Key("PlanId"))
+                                        .ValueExpr("PlanId")
+                                        .OnInitialized("CompInit")
+                                        .DisplayExpr("ArabicTitle").Placeholder(sharedResource["Select Plan"]).RtlEnabled(true)
+                                        )
+
+
+                                        <span id="PlanSpan" style="display:none" class="text-danger">Plan Is Required</span>
+                                    </div>
+                                </div>
+
+
+                            </fieldset>
+                            <fieldset class="form-group border p-5">
+                                <legend><b class="text-primary legenedC">@sharedResource["Shop Media"]</b></legend>
+                                <div class="form-group row">
+
+
+                                    <div class="col-lg-6 col-md-6 custom-file">
+
+                                        <input type="file" name="Logo" accept=".png, .jpg, .jpeg" class="formInput custom-file-input" id="Photo" onchange="changephotoname()" >
+                                        <label class="Labels custom-file-label formFile" id="photolabel" for="Logo">@sharedResource["Choose Logo"]</label>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-6 custom-file">
+
+                                        <input type="file" name="Banner" accept=".png, .jpg, .jpeg" class="formInput custom-file-input form-control input rounded" onchange="changeBannerphotoname()" id="BannerPhoto" >
+                                        <label class="Labels custom-file-label formFile" for="Banner" id="Bannerphotolabel">@sharedResource["Choose Banner photo"]</label>
+                                    </div>
+                                </div>
+                                 <div class="form-group row">
+                                     <dl class="col-lg-6 col-md-6">
+                                        <dt class="col-sm-4">@sharedResource["Logo"] </dt>
+                                        <dd class="col-sm-8">
+                                            <img style="border-radius: 13%;height: 150px;width: 150px;" class="img-fluid" src="~/@Model.shop.Pic" />
+                                        </dd>
+                                    </dl>
+                                    <dl class="col-lg-6 col-md-6">
+                                        <dt class="col-sm-4">@sharedResource["Banner"]</dt>
+                                        <dd class="col-sm-8">  <img style="border-radius: 13%; height: 150px;width: 150px;" class="img-fluid" src="~/@Model.shop.Banner" /> </dd>
+                                    </dl>
+
+
+                                   
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-lg-6 col-md-6 custom-file">
+
+
+                                        <input type="file" name="MorePhoto" multiple="multiple" accept=".png, .jpg, .jpeg" class="custom-file-input form-control input rounded formInput" onchange="changeImageFielsListphotoname()" id="ImageFielsListPhoto">
+                                        <label class="Labels custom-file-label formFile " for="MorePhoto" id="ImageFielsListphotolabel">@sharedResource["Choose More Photos"]</label>
+                                    </div>
+                                </div>
+                                     <div class="row" style="margin-top:25px" id="images_container">
+                                    <div class="col-12">
+                                        <h3> @sharedResource["Shop Images"] </h3>
+                                        <hr />
+                                        <div id="item_images" class="d-flex justify-content-center align-items-center" style="flex-wrap:wrap">
+                                            <div class="loader">Loading...</div>
+                                            <div class="message d-none">@sharedResource["No Images"]  </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <button type="submit" class="btn btn-primary  button-3">
+                                <span class="button-inner">
+                                    <span class="button-content">
+                                        <span class="text">@sharedResource["Save"]</span>
+                                    </span>
+                                </span>
+                            </button>
+
+                              <input asp-for="@Model.shopId" hidden id="shopIdValue" value="@Model.shopId" />
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<partial name="_ValidationScriptsPartial" />
+<script>
+     window.addEventListener('load', (event) => {
+        console.log('page is fully loaded');
+        var shopVal=document.getElementById("shopIdValue").value;
+        console.log(shopVal);
+        console.log(event);
+        fetch('http://' + location.host + '/Api/ShopImages/GetImagesForShop?id=' +shopVal)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                var item_images = document.getElementById("item_images");
+                                    document.getElementsByClassName("loader")[0].remove();
+
+
+                for (const property in data) {
+                    console.log(data[property]);
+                    var img = document.createElement("img");
+                    img.src = "/" + data[property].ImageName;
+                    img.width = 150;
+                    img.classList.add("m-3");
+                    var div = document.createElement("div");
+                    div.classList.add("position-relative");
+                    div.classList.add(data[property].ShopImagesId);
+                    div.appendChild(img);
+                    var x = document.createElement("div");
+                    x.style.right = 0;
+                    x.style.top = 0;
+                    x.style.cursor  = "pointer";
+                    x.addEventListener("click", (e) => removePic(e))
+                    
+                    x.classList.add("fas");
+                    x.classList.add("fa-times");
+                    x.classList.add("position-absolute")
+                    //x.innerHTML = "x";
+
+                    x.id = data[property].ShopImagesId;
+                    div.appendChild(x);
+
+                    item_images.appendChild(div);
+
+                }
+
+                if(data.length <= 0 ){
+                    document.getElementsByClassName("message")[0].classList.remove("d-none");
+                }
+
+             });
+
+      });
+
+
+      function removePic(e) {
+        console.log("remove pic")
+        console.log(e);
+        console.log(e.target.id);
+
+            fetch('http://' + location.host + `/Api/ShopImages/RemoveImageById?id=${e.target.id}`, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("remove from dom");
+            console.log(data);
+            var myobj = document.getElementsByClassName(data)[0];
+            myobj.remove();
+
+        }).catch(err => {
+            console.log("rror")
+        })
+    }
+
+        var Drop;
+
+        function CompInit(e) {
+            Drop = e.component;
+           console.log(Drop)
+        }
+
+
+          function onValueChanged(e) {
+
+
+            let dataSource = Drop.getDataSource();
+            dataSource.filter("CountryId", "=", e.value);
+            dataSource.load();
+            Drop.option("value", null);
+        }
+
+
+
+
+        function belal(e) {
+            console.log($("#DropCategory"))
+        alert('Come');
+        var secondEditor = $("#DropSubCategory").dxSelectBox("instance");
+        secondEditor.getDataSource().filter(['CategoryId', '=', e.value]);
+        secondEditor.getDataSource().load();
+    }
+
+      
+        function initMap() {
+         var markers = [];
+         var uniqueId = 1;
+          var latOb=document.getElementById("LatId").value;
+          var NlatOb=Number(latOb)
+          console.log("latOb = "+typeof(NlatOb));
+          var lngOb=document.getElementById("LngId").value;
+          var NlngOb=Number(lngOb)
+         console.log("lngOb = "+lngOb);
+        var myLatlng = { lat:NlatOb,lng:NlngOb };
+
+        var map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 4,
+            center: myLatlng,
+        });
+
+        var infoWindow = new google.maps.InfoWindow({
+            content: "Select Location",
+            position: myLatlng,
+        });
+
+        infoWindow.open(map);
+ 
+            var MarkerObj={lat: NlatOb, lng: NlngOb};
+            var marker = new google.maps.Marker({
+                position: MarkerObj,
+                map: map
+            });
+            marker.id = uniqueId;
+            uniqueId++;
+            markers.push(marker);
+               for (var i = 0; i < markers.length; i++) {
+            if (markers[i].id == marker.id-1) {
+                markers[i].setMap(null);
+                markers.splice(i, 1);
+                return;
+            }
+        }
+            infoWindow.open(map, marker);
+            infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({
+                position: myLatlng,
+            });
+          
+        map.addListener("click", function (mapsMouseEvent) {
+         ///////////////////////////
+
+          var jsonobj=JSON.stringify(mapsMouseEvent.latLng.toJSON());
+          var myObj = JSON.parse(jsonobj);
+            sendReq(myObj);
+            var MarkerObj={lat: myObj.lat, lng: myObj.lng};
+            var marker = new google.maps.Marker({
+                position: MarkerObj,
+                map: map
+            });
+            marker.id = uniqueId;
+            uniqueId++;
+            markers.push(marker);
+               for (var i = 0; i < markers.length; i++) {
+            if (markers[i].id == marker.id-1) {
+                markers[i].setMap(null);
+                markers.splice(i, 1);
+                return;
+            }
+        }
+            infoWindow.open(map, marker);
+            infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({
+                position: mapsMouseEvent.latLng,
+            });
+            //infoWindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2));
+            //infoWindow.open(map);
+                });
+
+    }
+
+    window.initMap = initMap;
+        function sendReq(obj){
+            flag=true;
+            console.log(obj);
+            document.getElementById("LatId").value=obj.lat;
+            document.getElementById("LngId").value=obj.lng;
+            }
+
+
+
+
+
+
+
+
+
+        function changephotoname() {
+            console.log("in photo")
+            var fileName = document.getElementById("Photo").value.split("\\").pop();
+            document.getElementById("photolabel").innerHTML = fileName;
+
+        }
+        function changeBannerphotoname() {
+            console.log("in photo")
+            var BannerfileName = document.getElementById("BannerPhoto").value.split("\\").pop();
+            document.getElementById("Bannerphotolabel").innerHTML = BannerfileName;
+        }
+        function changeImageFielsListphotoname() {
+            console.log("in photo")
+            var ConcatFilesName = "";
+
+            var ImageFielsListfileName = document.getElementById("ImageFielsListPhoto").value.split("\\").pop();
+            document.getElementById("ImageFielsListphotolabel").innerHTML = ImageFielsListfileName;
+        }
+        function validateMyForm() {
+           
+
+            var CountryLocks = $("#CountryLookupId").dxLookup("instance");
+            var SelectedCountryId = CountryLocks.option("selectedItem");
+            console.log(SelectedCountryId)
+            var CityLocks = $("#CitiesLookupId").dxLookup("instance");
+            var SelectedCityId = CityLocks.option("selectedItem");
+
+            var PlanLocks = $("#PlanLookupId").dxLookup("instance");
+            var SelectedPlanId = PlanLocks.option("selectedItem");
+            var CountrySpan = document.getElementById("CountrySpan")
+            var CitySpan = document.getElementById("CitySpan")
+
+            var PlanSpan = document.getElementById("PlanSpan")
+
+            if ( SelectedCountryId != null || SelectedCityId != null || SelectedPlanId != null ) {
+                CountrySpan.style.display = "none";
+                CitySpan.style.display = "none";
+
+                PlanSpan.style.display = "none";
+
+            }
+
+             if (SelectedCountryId == null) {
+                CountrySpan.style.display = "flex";
+                window.location.href = "#CountryLId";
+                return false;
+            }
+
+            else if (SelectedCityId == null) {
+                CitySpan.style.display = "flex";
+                CountrySpan.style.display = "none";
+                window.location.href = "#CityLId";
+                return false;
+            }
+
+            else if (SelectedPlanId == null) {
+                PlanSpan.style.display = "flex";
+                AreaSpan.style.display = "none";
+                window.location.href = "#PlanLId";
+                return false;
+            }
+
+
+
+            else {
+
+                return true;
+            }
+
+        }
+</script>

@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Dajeej.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject DajeejContext _context
+@{
+    var currentuser = await UserManager.GetUserAsync(User);
+    var facebooksocialLink = _context.SoicialMidiaLinks.FirstOrDefault().facebooklink;
+    var TwittersocialLink = _context.SoicialMidiaLinks.FirstOrDefault().TwitterLink;
+    var InstgramsocialLink = _context.SoicialMidiaLinks.FirstOrDefault().Instgramlink;
+    var LinkedInsocialLink = _context.SoicialMidiaLinks.FirstOrDefault().LinkedInlink;
+}
+  <!-- Footer
+        ============================================= -->
+       <footer id="footer" class="bg-light border-width-1 border-f5">
+			<div class="container">
+
+				<!-- Footer Widgets
+				============================================= -->
+				<div class="footer-widgets-wrap">
+
+					<div class="row justify-content-center text-center py-sm-5">
+						<div class="col-12 mb-4">
+
+							<div class="widget clearfix">
+								<a href="index.html"><img  src="/Admin/images/DajeejLogo.png" alt="Dajeej App Logo" class="mx-auto footer-logo mb-3" height="90"></a>
+								@*<span class="tetx-uppercase op-05 d-block">The Multi-Purpose HTML5 Template</span>*@
+							</div>
+
+						</div>
+
+						<div class="clear"></div>
+
+						<div class="col-12 mt-5">
+
+							<div class="widget">
+								<ul class="list-inline m-0">
+									<li class="list-inline-item mx-lg-3 my-lg-0 m-3"><a class="text-dark h-text-danger" asp-page="/Index"><u>@sharedResource["Home"]</u></a></li>
+									<li class="list-inline-item mx-lg-3 my-lg-0 m-3"><a class="text-dark h-text-danger" asp-page="About Us"><u>@sharedResource["About Us"]</u></a></li>
+									<li class="list-inline-item mx-lg-3 my-lg-0 m-3"><a class="text-dark h-text-danger" asp-page="/Register"><u>@sharedResource["Register"]</u></a></li>
+									<li class="list-inline-item mx-lg-3 my-lg-0 m-3"><a class="text-dark h-text-danger" asp-page="/Contactus"><u>@sharedResource["Contact Us"]</u></a></li>
+									<li class="list-inline-item mx-lg-3 my-lg-0 m-3"><a class="text-dark h-text-danger" asp-page="/Privacy"><u>@sharedResource["Privacy Policy"]</u></a></li>
+									<li class="list-inline-item mx-lg-3 my-lg-0 m-3"><a class="text-dark h-text-danger" href="#Download"><u>@sharedResource["Download"]</u></a></li>
+								</ul>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div><!-- .footer-widgets-wrap end -->
+
+			</div>
+
+			<!-- Copyrights
+			============================================= -->
+			<div id="copyrights" class="bg-white">
+				<div class="container">
+
+					<div class="row">
+
+						<div class="col-12 text-center">
+							<div class="d-flex justify-content-center mb-3">
+								<a href="@facebooksocialLink" class="social-icon si-small si-colored si-rounded si-facebook">
+									<i class="icon-facebook"></i>
+									<i class="icon-facebook"></i>
+								</a>
+
+								<a href="@TwittersocialLink" class="social-icon si-small si-colored si-rounded si-twitter">
+									<i class="icon-twitter"></i>
+									<i class="icon-twitter"></i>
+								</a>
+
+								@*<a href="#" class="social-icon si-small si-colored si-rounded si-android">
+									<i class="icon-android"></i>
+									<i class="icon-android"></i>
+								</a>*@
+								
+
+							<a href="@InstgramsocialLink" class="social-icon si-small si-colored si-rounded si-instagram" title="Instagram">
+									<i class="icon-instagram"></i>
+									<i class="icon-instagram"></i>
+								</a>
+
+								<a href="@LinkedInsocialLink" class="social-icon si-small si-colored si-rounded si-linkedin">
+									<i class="icon-linkedin"></i>
+									<i class="icon-linkedin"></i>
+								</a>
+							</div>
+							<span class="text-black-50">&copy; 2020 @sharedResource["All Rights Reserved by Dajeej Site."]</span>
+						</div>
+
+					</div>
+
+				</div>
+			</div><!-- #copyrights end -->
+		</footer><!-- #footer end -->

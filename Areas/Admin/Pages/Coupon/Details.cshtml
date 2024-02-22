@@ -1,0 +1,72 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.Coupon.DetailsModel
+@{
+}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Coupon"]  </h3>
+        <a asp-page="Index" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+        <div class="row">
+            @*<h4> @sharedResource["Details"] </h4>*@
+            <hr />
+
+            <div class="col-md-12 col-lg-12 mt-4">
+
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["Serial"]  </dt>
+                    <dd class="col-sm-10"> @Model.coupon.Serial </dd>
+                </dl>
+            </div>
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["IssueDate"]  </dt>
+                    <dd class="col-sm-10"> @Model.coupon.IssueDate </dd>
+                </dl>
+            </div>
+            <div class="col-md-12 col-lg-12 mt-4">
+
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["ExpirationDate"]  </dt>
+                    <dd class="col-sm-10"> @Model.coupon.ExpirationDate </dd>
+                </dl>
+            </div>
+
+
+            <div class="col-md-12 col-lg-12 mt-4">
+                <dl class="row">
+                    <dt class="col-sm-2">@sharedResource["Amount"]  </dt>
+                    <dd class="col-sm-10">
+                        @Model.coupon.Amount
+                    </dd>
+                </dl>
+            </div>
+
+
+
+
+        </div>
+        <div class="row">
+            @{
+                if (Model.coupon.CouponTypeId != 0)
+                {
+                    <div class="col-md-12 col-lg-6 mt-4">
+                        <h4> @sharedResource["Coupon Type"] </h4>
+                        <hr />
+
+                        <div class="d-flex justify-content-between">
+                            <div>@sharedResource["TlAr"]  </div>
+                            <div> @Model.coupon.CouponType.Title </div>
+                        </div>
+
+                    </div>
+                }
+
+
+            }
+        </div>
+    </div>
+</div>
+               

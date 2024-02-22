@@ -1,0 +1,174 @@
+﻿@page
+@model Dajeej.Areas.Shop.Pages.Gallary.ShopGallaryModel
+@{
+}
+<div class="card w-100">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Shop Gallary"] </h3>
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+
+        <form id="form" class="item_form" method="post" enctype="multipart/form-data">
+            <div class="text-danger" asp-validation-summary="All"></div>
+            <div class="row">
+                <div class="col-md-12 col-lg-6 col_form" style="margin-bottom:25px">
+                    <h3> @sharedResource["Gallary"]  </h3>
+                    <hr />
+
+                </div>
+                <div class="col-md-12 col-lg-6 col_form">
+                    <div class="row">
+                       
+
+                        <div class="col-md-12 col-lg-6 col_form">
+                            <h3>@sharedResource["Add New Images"]  </h3>
+                            <hr />
+                            <div id="fileuploader">
+                                <div class="widget-container">
+                                    @(Html.DevExtreme().FileUploader()
+                                    .ID("file-uploader")
+                                    .Name("myFile")
+                                    .Accept("image/*")
+                                    .UploadMode(FileUploadMode.UseForm)
+                                    .Multiple(true)
+                                    .UploadUrl(Url.Action("Upload", "FileUploader"))
+                                    .OnValueChanged("fileUploader_valueChanged")
+                                    .SelectButtonText(sharedResource["Select_photo"])
+                                    )
+                                </div>
+                            </div>
+                        </div>
+                        <input asp-for="@Model.shopId" hidden id="shopIdValue" value="@Model.shopId" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:25px" id="images_container">
+                <div class="col-12">
+                    <h3> @sharedResource["Shop Gallary"] </h3>
+                    <hr />
+                    <div id="item_images" class="d-flex justify-content-center align-items-center" style="flex-wrap:wrap">
+                        <div class="loader">Loading...</div>
+                        <div class="message d-none">@sharedResource["No_Images"]  </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="button" style="margin-top:10px; margin-bottom:20px">
+
+                @(Html.DevExtreme().Button()
+                .ID("button")
+                .Text(sharedResource["Save"])
+                .Type(ButtonType.Success)
+                .UseSubmitBehavior(true)
+                )
+            </div>
+
+
+        </form>
+
+
+
+    </div>
+</div>
+
+<script>
+      window.addEventListener('load', (event) => {
+        console.log('page is fully loaded');
+        var shopVal=document.getElementById("shopIdValue").value;
+        console.log(shopVal);
+        console.log(event);
+        fetch('http://' + location.host + '/Api/ShopImages/GetImagesForShop?id=' +shopVal)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                var item_images = document.getElementById("item_images");
+                                    document.getElementsByClassName("loader")[0].remove();
+
+
+                for (const property in data) {
+                    console.log(data[property]);
+                    var img = document.createElement("img");
+                    img.src = "/" + data[property].ImageName;
+                    img.width = 150;
+                    img.classList.add("m-3");
+                    var div = document.createElement("div");
+                    div.classList.add("position-relative");
+                    div.classList.add(data[property].ShopImagesId);
+                    div.appendChild(img);
+                    var x = document.createElement("div");
+                    x.style.right = 0;
+                    x.style.top = 0;
+                    x.style.cursor  = "pointer";
+                    x.addEventListener("click", (e) => removePic(e))
+                    
+                    x.classList.add("fas");
+                    x.classList.add("fa-times");
+                    x.classList.add("position-absolute")
+                    //x.innerHTML = "x";
+
+                    x.id = data[property].ShopImagesId;
+                    div.appendChild(x);
+
+                    item_images.appendChild(div);
+
+                }
+
+                if(data.length <= 0 ){
+                    document.getElementsByClassName("message")[0].classList.remove("d-none");
+                }
+
+             });
+
+      });
+
+
+      function removePic(e) {
+        console.log("remove pic")
+        console.log(e);
+        console.log(e.target.id);
+
+            fetch('http://' + location.host + `/Api/ShopImages/RemoveImageById?id=${e.target.id}`, {
+        method: 'POST'
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("remove from dom");
+            console.log(data);
+            var myobj = document.getElementsByClassName(data)[0];
+            myobj.remove();
+
+        }).catch(err => {
+            console.log("rror")
+        })
+    }
+
+    function getFileUploaderInstance() {
+        return $("#file-uploader").dxFileUploader("instance");
+    }
+
+    function fileUploader_valueChanged(e) {
+        var files = e.value;
+    }
+
+    function acceptOption_changed(e) {
+        getFileUploaderInstance().option("accept", e.value);
+    }
+
+    function uploadMode_changed(e) {
+        getFileUploaderInstance().option("uploadMode", e.value);
+    }
+
+    function multipleOption_changed(e) {
+        getFileUploaderInstance().option("multiple", e.value);
+    }
+
+
+    
+    
+
+     
+
+</script>

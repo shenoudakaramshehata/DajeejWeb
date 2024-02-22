@@ -1,0 +1,72 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.SystemConfigration.UsersFeedBacksModel
+@{
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-header d-flex justify-content-between align-items-center">
+                            @sharedResource["Customers Messages"]
+                        </h2>
+                    </div>
+                    <div class="card-body" >
+                        @(Html.DevExtreme().DataGrid<Dajeej.Models.ContactUs>()
+    .DataSource(Model.Msgs)
+    .RemoteOperations(true)
+    .Columns(columns => {
+         columns.AddFor(m => m.FullName).Caption(sharedResource["Full Name"]);
+        columns.AddFor(m => m.Mobile).Caption(sharedResource["Mobile"]);
+        columns.AddFor(m => m.Email).Caption(sharedResource["Email"]);       
+        columns.AddFor(m => m.TransDate).Caption(sharedResource["Message Date"]);
+         columns.Add().Caption(sharedResource["Actions"]).Width(200).Alignment(HorizontalAlignment.Center).CellTemplate(@<text>
+                        @*<div class="btn-group" role="group" aria-label="Basic example">*@
+                        <a class="btn btn-primary btn-sm"  href="/Admin/SystemConfigration/FeedBackDetails?id=<%- data.ContactId %>"> <i class="fas fa-eye"></i> </a>
+                        <a class="btn btn-danger btn-sm"  href="/Admin/SystemConfigration/DeleteCustomerMsg?id=<%- data.ContactId %>"> <i class="fas fa-trash"></i> </a>
+                      @* </div>*@
+                         </text>);
+                        })
+.Paging(paging => paging.PageSize(10))
+                        .Pager(pager =>
+                        {
+                            pager.Visible(true);
+                            pager.DisplayMode(GridPagerDisplayMode.Full);
+                            pager.ShowPageSizeSelector(true);
+                            pager.AllowedPageSizes(new JS("[5, 10, 'all']"));
+                            pager.ShowInfo(true);
+                            pager.ShowNavigationButtons(true);
+
+                        })
+    .ShowBorders(true)
+    .FilterRow(filterRow => filterRow
+    .Visible(true)
+    .ApplyFilter(GridApplyFilterMode.Auto)
+    )
+    .SearchPanel(searchPanel => searchPanel
+    .Visible(true)
+    .Width(240)
+            .Placeholder(sharedResource["SearchTxt"])
+
+    )
+    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+    .ShowRowLines(true).ShowColumnLines(true)
+    .RowAlternationEnabled(true)
+        .RtlEnabled(bool.Parse(sharedResource["ArLang"]))
+
+    )
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

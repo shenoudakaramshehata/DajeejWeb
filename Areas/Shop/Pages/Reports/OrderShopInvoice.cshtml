@@ -1,0 +1,13 @@
+﻿@page
+@model Dajeej.Areas.Shop.Pages.Reports.OrderShopInvoiceModel
+@{
+}
+@using DevExpress.AspNetCore
+
+@using Dajeej.Areas.Shop.Pages.Reports
+
+
+<link rel="stylesheet" href="~/css/viewer.part.bundle.css" />
+<script src="~/js/viewer.part.bundle.js"></script>
+
+@Html.DevExpress().WebDocumentViewer("DocumentViewer").Height("1000px").Bind(Model.Report)

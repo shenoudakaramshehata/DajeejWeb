@@ -1,0 +1,305 @@
+﻿@page
+@model Dajeej.Areas.Shop.Pages.shop.IndexModel
+@{
+}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac">@sharedResource["Edit"]  @sharedResource["Shop"] </h3>
+        <a asp-area="Shop" asp-page="/Shop/myshop" class="btn btn-primary"> @sharedResource["Back"]</a>
+
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+      
+        <form id="form" method="post" enctype="multipart/form-data">
+            <div class="text-danger" asp-validation-summary="All"></div>
+
+            <div class="row">
+                <div class="col-sm-12 col-lg-6" style="margin-top: 3px;">
+                  
+                    <div class="dx-field d-none">
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.Shop.ShopId)
+                            .Placeholder("Enter The ShopTlar ...")
+                            .Value(Model.Shop.ShopId)
+
+                            )
+                        </div>
+                    </div>
+
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["TlAr"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Shop.ShopTLAR)
+                           .Value(Model.Shop.ShopTLAR)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["TlEn"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Shop.ShopTLEN)
+                           .Value(Model.Shop.ShopTLEN)
+
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Tele"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Shop.Tele)
+
+                           .Value(Model.Shop.Tele)
+
+
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Mobile"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Shop.Mobile)
+                               
+                               .Value(Model.Shop.Mobile)
+
+
+                            )
+                        </div>
+                    </div>
+
+                               <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["Country"]:</div>
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().SelectBoxFor(s => s.Shop.CountryId)
+                            .ValueExpr("Value")
+                            .DisplayExpr("Text")
+                            .DataSource(ds => ds.WebApi().Controller("Shops").LoadAction("CountryLookup").Key("Value"))
+                            .ShowClearButton(true)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Address"]:</div>
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Shop.Address)
+
+                            .Value(Model.Shop.Address)
+                            )
+                        </div>
+                    </div>
+                     <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Instgram"]:</div>
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Shop.Instgram)
+
+                            .Value(Model.Shop.Instgram)
+                            )
+                        </div>
+                    </div>
+                        <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["Email"] :</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(c => c.Shop.Email)
+                            .Value(Model.Shop.Email)
+                            )
+                        </div>
+                    </div>
+                         <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["deliverycost"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.Shop.DeliveryCost)
+                                .Value(Model.Shop.DeliveryCost)
+                            )
+                        </div>
+                    </div>
+                     
+                    <div class="dx-field">
+
+                        
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Shop.Password).Visible(false)
+
+                            .Value(Model.Shop.Password)
+                            )
+                        </div>
+                    </div>
+                    <div class="dx-field">
+
+                        
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Shop.Email).Visible(false)
+
+                            .Value(Model.Shop.Email)
+                            )
+                        </div>
+                    </div>
+                
+              <div class="dx-field">
+
+                       
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Shop.Lat).Visible(false)
+
+                            .Value(Model.Shop.Lat)
+                            )
+                        </div>
+                    </div>
+                     <div class="dx-field">
+
+                       
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Shop.Lng).Visible(false)
+
+                            .Value(Model.Shop.Lng)
+                            )
+                        </div>
+                    </div>
+                     <div class="dx-field">
+
+                       
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Shop.Banner).Visible(false)
+
+                            .Value(Model.Shop.Banner)
+                            )
+                        </div>
+                    </div>
+                                         <div class="dx-field">
+
+                       
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.Shop.EntityTypeId).Visible(false)
+
+                            .Value(Model.Shop.EntityTypeId)
+                            )
+                        </div>
+                    </div>
+                   
+                </div>
+
+                <div class="col-sm-12 col-lg-6">
+
+
+
+                 
+
+                    <div class="dx-field">
+                       @* <div class="dx-field-label">@sharedResource["RegisterDate"]:</div>*@
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().DateBoxFor(c => c.Shop.RegisterDate).Visible(false)
+                            .Value(Model.Shop.RegisterDate)
+                            )
+                        </div>
+                    </div>
+
+                
+
+                    
+
+
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["Picture"] :</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().FileUploader()
+                            .Name("Pic")
+                            .SelectButtonText(sharedResource["Select_photo"])
+                            .LabelText("")
+                            .Accept("image/*")
+                            .UploadMode(FileUploadMode.UseForm)
+
+                            )
+
+                        </div>
+                    </div>
+                     <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Description In English"]:</div>
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Shop.DescriptionTLEN)
+
+                            .Value(Model.Shop.DescriptionTLEN)
+                            )
+                        </div>
+                    </div>
+                    
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["Description In Arabic"]:</div>
+
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextAreaFor(s => s.Shop.DescriptionTLAR)
+
+                            .Value(Model.Shop.DescriptionTLAR)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+
+                        <div class="dx-field-label">@sharedResource["ShopNo"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().TextBoxFor(s => s.Shop.ShopNo)
+                            .Value(Model.Shop.ShopNo)
+                            )
+                        </div>
+                    </div>
+
+                    <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["IsActive"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().CheckBoxFor(s => s.Shop.IsActive)
+                            .Value(Model.Shop.IsActive)
+
+                            )
+                        </div>
+                    </div>
+                       <div class="dx-field">
+                        <div class="dx-field-label">@sharedResource["Sort"]:</div>
+                        <div class="dx-field-value">
+                            @(Html.DevExtreme().NumberBoxFor(s => s.Shop.OrderIndex)
+                            .Value(Model.Shop.OrderIndex)
+                            )
+                        </div>
+                    </div>
+                    
+
+
+               
+
+                </div>
+              
+
+                @(Html.DevExtreme().Button()
+                    .ID("button")
+                    .Text(sharedResource["Save"])
+                    .Type(ButtonType.Success)
+                    .UseSubmitBehavior(true)
+                    )
+            </div>
+              <br />
+                <br />
+        </form>
+    </div>
+</div>

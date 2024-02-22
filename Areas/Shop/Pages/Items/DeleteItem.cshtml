@@ -1,0 +1,111 @@
+﻿@page
+@model Dajeej.Areas.Shop.Pages.Items.DeleteItemModel
+
+@{
+    ViewData["Title"] = "DeleteItem";
+    Layout = "~/Areas/Shop/Pages/Shared/_Layout.cshtml";
+}
+@inject Dajeej.Data.DajeejContext _context
+
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3 style="margin-top:9px; color:#4b49ac"> @sharedResource["Delete"]  @sharedResource["Item"]  </h3>
+        <a class="btn btn-info" style="background-color:#4b49ac !important; border:none" href="/shop/items/itemlist">@sharedResource["Back"]</a>
+    </div>
+    <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+
+
+        <div class="details_container">
+            <h4>@sharedResource["Items"]</h4>
+            <hr />
+            <dl class="row details_tb">
+                <dt class="col-sm-2">
+                    @sharedResource["Name"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.ItemDescriptionAr)
+                </dd>
+                <dt class="col-sm-2">
+                    @sharedResource["Picture"]
+                </dt>
+                <dd class="col-sm-10">
+                    <img style="width:120px; height:120px" src="~/Images/Item/@Model.Items.ItemImage" />
+                </dd>
+                <dt class="col-sm-2">
+                    @sharedResource["Description"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.ItemDescriptionAr)
+                </dd>
+                <dt class="col-sm-2">
+                    @sharedResource["Price"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.ItemPrice)
+                </dd>
+                <dt class="col-sm-2">
+                    @sharedResource["IsActive"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.IsActive)
+                </dd>
+                          <dt class="col-sm-2">
+                    @sharedResource["OutOfStock"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.OutOfStock)
+                </dd>
+                <dt class="col-sm-2">
+                    @sharedResource["Sort"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.OrderIndex)
+                </dd>
+                <dt class="col-sm-2">
+                    @sharedResource["Favourite"]
+                </dt>
+               @* <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.IsFavourite)
+                </dd>*@
+                <dt class="col-sm-2">
+                    @sharedResource["Category"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.Category.CategoryTLAR)
+                </dd>
+                <dt class="col-sm-2">
+                    @sharedResource["Customer"]
+                </dt>
+                @*<dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.Customer.CustomernameAr)
+                </dd>*@
+                <dt class="col-sm-2">
+                    @sharedResource["Shop"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.Shop.ShopTLAR)
+                </dd>
+                <dt class="col-sm-2">
+                    @sharedResource["SubCategory"]
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Items.SubCategory.SubCategoryTLAR)
+                </dd>
+            </dl>
+            @if (_context.OrderItems.Where(s => s.ItemId == Model.Items.ItemId).Count() <= 0)
+            {
+                <form method="post">
+                    <input type="hidden" asp-for="Items.ItemId" />
+                    <input type="submit" value="@sharedResource["Delete"]" class="btn btn-danger" />
+
+                </form>
+            }
+            else
+            {
+                <div class="text-danger"> @sharedResource["CannotDeleted"]</div>
+
+            }
+
+        </div>
+    </div>
+</div>

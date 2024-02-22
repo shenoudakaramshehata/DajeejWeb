@@ -1,0 +1,158 @@
+﻿.nav, .card, .content-wrapper {
+    font-family: 'Cairo', sans-serif !important;
+}
+
+.page-body-wrapper {
+    flex-direction: row-reverse !important;
+}
+
+.navbar {
+    flex-direction: row-reverse !important;
+}
+
+.navbar-menu-wrapper {
+    justify-content: start !important;
+    direction: rtl;
+}
+
+
+@media (min-width: 992px)  {
+
+    .navbar .navbar-menu-wrapper .navbar-nav.navbar-nav-right {
+
+    margin-right: auto !important;
+    }
+
+    .navbar .navbar-menu-wrapper .navbar-nav.navbar-nav-right
+}
+
+
+@media (min-width: 992px)  {
+    .navbar .navbar-menu-wrapper .navbar-nav.navbar-nav-right {
+
+        margin-right: auto !important;
+        margin-left: initial !important
+    }
+}
+
+.nav-item{
+    direction: rtl !important
+}
+
+.card-header {
+    flex-direction: row-reverse !important;
+}
+
+
+.card-header h3 {
+    text-align:right;
+
+}
+
+.sidebar .nav .nav-item .nav-link .menu-title {
+    margin-right: 4px !important;
+}
+
+
+
+.circle {
+    margin-left: 55px;
+    float: right;
+    background-color: #4b49ac;
+    border-radius: 50%;
+    color: white;
+    display: block;
+    right: initial;
+    left: -35px !important;
+        position: absolute;
+    height: 26px;
+    padding: 7px;
+    top: 8px
+}
+
+.profile_menu {
+    right: initial !important;
+    left: 0 !important;
+    text-align: right;
+    font-family: 'Cairo', sans-serif !important;
+}
+
+.welcome_message_conatiner {
+    flex-direction: row-reverse;
+    font-family: 'Cairo', sans-serif !important;
+}
+
+    .welcome_message_conatiner h3, .welcome_message_conatiner h6{
+        text-align: right
+    }
+
+.box  {
+    direction: rtl !important
+}
+
+.card-body div p, .card-body p {
+    text-align: right;
+    display: block;
+    width: 100%;
+}
+
+.dx-field-label{
+    float:right
+}
+
+.dx-field-value{
+    float:left
+}
+/*
+.form_inside {
+    text-align: right;
+    direction: rtl;
+}*/
+
+.form-group label{
+    text-align:right
+}
+
+
+.form_cont {
+    direction:rtl;
+    text-align:right
+}
+
+.item_form {
+    direction: rtl;
+}
+
+.col_form {
+    text-align: right;
+}
+
+.details_tb, .customer_info_container, .product_order_details {
+    text-align: right;
+    direction: rtl;
+}
+
+.details_container h4, .order_details h4 {
+    text-align: right
+}
+
+#form .row {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+#form .additem {
+    flex-direction: row !important;
+}
+
+dl.row {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+.card h4 {
+    text-align:right
+}
+
+.card div.text-danger {
+    text-align:right
+}

@@ -1,0 +1,318 @@
+﻿@page
+@model Dajeej.Areas.Admin.Pages.SystemConfigration.EditPageContentModel
+@{
+}
+
+
+<style>
+    .dx-htmleditor-content img {
+        vertical-align: middle;
+        padding-right: 10px;
+    }
+
+    .value-content {
+        margin-top: 20px;
+        overflow: auto;
+        height: 110px;
+        width: 100%;
+        white-space: pre-wrap;
+    }
+
+    .options {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: rgba(191, 191, 191, 0.15);
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+
+    .loader2 {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Phi_fenomeni.gif/50px-Phi_fenomeni.gif') 50% 50% no-repeat rgb(249,249,249);
+    }
+</style>
+
+
+@section ExternalDependencies {
+    <script src="https://unpkg.com/devextreme-quill@21_2/dist/dx-quill.min.js"></script>
+    <script src="https://unpkg.com/turndown@7.0.0/dist/turndown.js"></script>
+    <script src="https://unpkg.com/devextreme-showdown/dist/showdown.min.js"></script>
+}
+
+
+
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-header d-flex justify-content-between align-items-center">
+                            @sharedResource["Edit"] @sharedResource["Content"]
+                            <a asp-page="PagesContent" class="btn btn-primary invers"> @sharedResource["Back"]</a>
+
+                        </h2>
+                    </div>
+                    <div class="card-body">
+
+
+
+
+                        <div style="padding-top:20px;padding-left:20px;padding-right:20px">
+                            <form id="form" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-6" style="margin-top: 3px;">
+                                        <h3>@Model.pageContent.PageTitleAr</h3>
+                                        @(Html.DevExtreme().HtmlEditorFor(m=>m.pageContent.ContentAr)
+        .ID("html_editor")
+        .Height(300)
+        .Value(Model.pageContent.ContentAr)
+        .OnValueChanged("ContentArChanged")
+        .OnContentReady("ContentArMarkupValue")
+        .Toolbar(toolbar => toolbar.Items(
+        items => {
+         items.Add().Name(HtmlEditorToolbarItem.Undo);
+
+            items.Add().Name(HtmlEditorToolbarItem.Redo);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add()
+                .Name("size")
+                .AcceptedValues(new[] { "8pt", "10pt", "12pt", "14pt", "18pt", "24pt", "36pt" });
+
+            items.Add()
+                .Name("font")
+                .AcceptedValues(new[] { "Arial", "Courier New", "Georgia", "Impact", "Lucida Console", "Tahoma", "Times New Roman", "Verdana" });
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.Bold);
+
+            items.Add().Name(HtmlEditorToolbarItem.Italic);
+
+            items.Add().Name(HtmlEditorToolbarItem.Strike);
+
+            items.Add().Name(HtmlEditorToolbarItem.Underline);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.AlignLeft);
+
+            items.Add().Name(HtmlEditorToolbarItem.AlignCenter);
+
+            items.Add().Name(HtmlEditorToolbarItem.AlignRight);
+
+            items.Add().Name(HtmlEditorToolbarItem.AlignJustify);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.OrderedList);
+
+            items.Add().Name(HtmlEditorToolbarItem.BulletList);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add()
+                .Name("header")
+                .AcceptedValues(new JS("[false, 1, 2, 3, 4, 5]"));
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.Color);
+
+            items.Add().Name(HtmlEditorToolbarItem.Background);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.Link);
+
+            items.Add().Name(HtmlEditorToolbarItem.Image);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.Clear);
+
+            items.Add().Name(HtmlEditorToolbarItem.CodeBlock);
+
+            items.Add().Name(HtmlEditorToolbarItem.Blockquote);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertTable);
+
+            items.Add().Name(HtmlEditorToolbarItem.DeleteTable);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertRowAbove);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertRowBelow);
+
+            items.Add().Name(HtmlEditorToolbarItem.DeleteRow);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertColumnLeft);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertColumnRight);
+
+            items.Add().Name(HtmlEditorToolbarItem.DeleteColumn);
+        })
+        )
+        )
+                                    </div>
+                                    <div class="col-sm-12 col-lg-6" style="margin-top: 3px;">
+
+                                        <h3>@Model.pageContent.PageTitleEn</h3>
+                                        @(Html.DevExtreme().HtmlEditorFor(m => m.pageContent.ContentEn)
+        .ID("html_editor2")
+        .Height(300)
+        .Value(Model.pageContent.ContentEn)
+        .OnValueChanged("ContentEnChanged")
+        .OnContentReady("ContentEnMarkupValue")
+        .Toolbar(toolbar => toolbar.Items(
+        items => {
+            items.Add().Name(HtmlEditorToolbarItem.Undo);
+
+            items.Add().Name(HtmlEditorToolbarItem.Redo);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add()
+                .Name("size")
+                .AcceptedValues(new[] { "8pt", "10pt", "12pt", "14pt", "18pt", "24pt", "36pt" });
+
+            items.Add()
+                .Name("font")
+                .AcceptedValues(new[] { "Arial", "Courier New", "Georgia", "Impact", "Lucida Console", "Tahoma", "Times New Roman", "Verdana" });
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.Bold);
+
+            items.Add().Name(HtmlEditorToolbarItem.Italic);
+
+            items.Add().Name(HtmlEditorToolbarItem.Strike);
+
+            items.Add().Name(HtmlEditorToolbarItem.Underline);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.AlignLeft);
+
+            items.Add().Name(HtmlEditorToolbarItem.AlignCenter);
+
+            items.Add().Name(HtmlEditorToolbarItem.AlignRight);
+
+            items.Add().Name(HtmlEditorToolbarItem.AlignJustify);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.OrderedList);
+
+            items.Add().Name(HtmlEditorToolbarItem.BulletList);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add()
+                .Name("header")
+                .AcceptedValues(new JS("[false, 1, 2, 3, 4, 5]"));
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.Color);
+
+            items.Add().Name(HtmlEditorToolbarItem.Background);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.Link);
+
+            items.Add().Name(HtmlEditorToolbarItem.Image);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.Clear);
+
+            items.Add().Name(HtmlEditorToolbarItem.CodeBlock);
+
+            items.Add().Name(HtmlEditorToolbarItem.Blockquote);
+
+            items.Add().Name(HtmlEditorToolbarItem.Separator);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertTable);
+
+            items.Add().Name(HtmlEditorToolbarItem.DeleteTable);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertRowAbove);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertRowBelow);
+
+            items.Add().Name(HtmlEditorToolbarItem.DeleteRow);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertColumnLeft);
+
+            items.Add().Name(HtmlEditorToolbarItem.InsertColumnRight);
+
+            items.Add().Name(HtmlEditorToolbarItem.DeleteColumn);
+        })
+        )
+        )
+                                        <div style="margin:30px;">
+                                            @(Html.DevExtreme().Button()
+            .ID("button")
+            .Text(sharedResource["Save"])
+            .Type(ButtonType.Success)
+            .UseSubmitBehavior(true)
+            )
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    function ContentEnChanged(e) {
+
+        EnMarkup = e.component.option("value");
+    }
+    function ContentArChanged(e) {
+        ArMarkup = e.component.option("value");
+    }
+
+    function ContentEnMarkupValue(e) {
+        EnMarkup = e.component.option("value");
+
+    }
+    function ContentArMarkupValue(e) {
+        ArMarkup = e.component.option("value");
+    }
+
+
+    var EnMarkup = ""
+    var ArMarkup = ""
+
+
+
+
+
+
+
+
+</script>
